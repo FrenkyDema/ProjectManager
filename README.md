@@ -1,7 +1,7 @@
 # ProjectMenager
 ---
 
-### Requisiti
+## Requisiti
 
 Python3.10, 
 [CustomTkinter](https://github.com/TomSchimansky/CustomTkinter),
