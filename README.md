@@ -1,17 +1,9 @@
-# Program name: ProjectMenager.py
+# Project name: ProjectMenager
 ---
-
-## Programma
-
-_________
 
 ### Requisiti
 
 Python3
-
-## Tags
-
-boold, standard
 
 ## Author
 
