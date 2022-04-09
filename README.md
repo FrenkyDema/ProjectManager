@@ -1,9 +1,11 @@
-# Project name: ProjectMenager
+# ProjectMenager
 ---
 
 ### Requisiti
 
-Python3
+Python3.10, 
+[CustomTkinter](https://github.com/TomSchimansky/CustomTkinter),
+[Tkinter](https://docs.python.org/3/library/tkinter.html)
 
 ## Author
 
