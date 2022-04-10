@@ -1,17 +1,35 @@
 # -*- coding: utf-8 -*-
 __autor__ = "Francesco"
 __version__ = "0101 2022/03/16"
+from pathlib import Path
+from customtkinter import *
+from tkinter import messagebox, scrolledtext
+
+
+def import_parents(level):
+        global __package__
+        file = Path(__file__).resolve()
+        parent, top = file.parent, file.parents[level]
+
+        sys.path.append(str(top))
+        try:
+            sys.path.remove(str(parent))
+        except ValueError:  # giá rimosso
+            pass
+
+        __package__ = '.'.join(parent.parts[len(top.parts):])
+
+import_parents(4)
+
+
+from ....lib import project_lib
+from ....gui import main_application, main_page_enum
 
 
 CONFIG_FILE = "config.json"
 
-
-from ....gui import *
-from ...main_application import App
-
-
 class EditHeadersPage(CTkFrame):
-    def __init__(self, master, app: App):
+    def __init__(self, master, app: main_application.App):
         self.app = app
         super().__init__(master)
 
@@ -51,7 +69,7 @@ class EditHeadersPage(CTkFrame):
             master=self,
             text=f"Indietro",
             fg_color=("gray75", "gray30"),
-            command=lambda: self.app.chose_frame(MainPageEnum.SETTINGS))
+            command=lambda: self.app.chose_frame(main_page_enum.MainPageEnum.SETTINGS))
 
         back_button.grid(row=7, column=0, columnspan=3,
                          padx=20, pady=20, sticky="es")

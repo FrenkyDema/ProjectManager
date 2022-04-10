@@ -1,4 +1,5 @@
-from ...gui import *
+from enum import Enum
+
 
 class SettingsPageEnum(Enum):
     EDIT_HEADER = 1

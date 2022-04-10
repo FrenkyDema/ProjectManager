@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 __autor__ = "Francesco"
 __version__ = "0101 2022/03/16"
+from customtkinter import *
 
-
-from ...gui import *
-from ..main_application import App
+from ...gui import main_application
+from .settings_page_enum import SettingsPageEnum
+from .settings_pages import edit_header_page
 
 class SettingsPage(CTkFrame):
-    def __init__(self, master, app: App):
+    def __init__(self, master, app: main_application.App):
         self.app = app
         super().__init__(master)
 
@@ -52,7 +53,7 @@ class SettingsPage(CTkFrame):
     def change_page(self, page_type):
         match page_type:
             case SettingsPageEnum.EDIT_HEADER:
-                self.app.change_right_frame(EditHeadersPage(self.app, self.app))
+                self.app.change_right_frame(edit_header_page.EditHeadersPage(self.app, self.app))
 
             case SettingsPageEnum.EDIT_VARIABLE:
                 pass

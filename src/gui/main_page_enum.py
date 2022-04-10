@@ -1,4 +1,4 @@
-from ..gui import *
+from enum import Enum
 
 
 class MainPageEnum(Enum):

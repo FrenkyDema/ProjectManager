@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 __autor__ = "Francesco"
 __version__ = "0101 2022/03/19"
-
-from ...gui import *
-
+from customtkinter import *
 
 class MainPage(CTkFrame):
     def __init__(self, master):

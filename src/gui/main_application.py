@@ -1,5 +1,7 @@
+from customtkinter import *
 
-from ..gui import *
+from .pages import main_page, settings_page, new_project_page
+from .main_page_enum import MainPageEnum
 
 # Modes: "System" (standard), "Dark", "Light"
 set_appearance_mode("System")
@@ -35,7 +37,7 @@ class App(CTk):
                                    corner_radius=0)
         self.frame_left.grid(row=0, column=0, sticky="nswe")
 
-        self.frame_right = MainPage(self)
+        self.frame_right = main_page.MainPage(self)
         self.frame_right.grid(row=0, column=1, sticky="nswe", padx=20, pady=20)
 
         # ============ frame_left ============
@@ -94,17 +96,17 @@ class App(CTk):
     def chose_frame(self, page_type):
         match page_type:
             case MainPageEnum.NEW_PROJECT:
-                self.change_right_frame(NewProjectPage(self))
+                self.change_right_frame(new_project_page.NewProjectPage(self))
 
             case MainPageEnum.SORT_PROJECT:
                 # TODO sort project
                 pass
 
             case MainPageEnum.SETTINGS:
-                self.change_right_frame(SettingsPage(self, self))
+                self.change_right_frame(settings_page.SettingsPage(self, self))
 
             case _:
-                self.change_right_frame(MainPage(self))
+                self.change_right_frame(main_page.MainPage(self))
 
     def change_mode(self):
         if self.switch_dark_mode.get() == 1:

@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 __autor__ = "Francesco"
 __version__ = "0101 2022/03/19"
+from customtkinter import *
+from tkinter import StringVar, messagebox, scrolledtext
 
+from ...lib import project_lib
 
-from ...gui import *
 
 PROJECT_SETTINGS_FILE = "project_settings.json"
 
