@@ -1,25 +1,8 @@
 # -*- coding: utf-8 -*-
 __autor__ = "Francesco"
 __version__ = "0101 2022/03/16"
-from pathlib import Path
 from customtkinter import *
 from tkinter import messagebox, scrolledtext
-
-
-def import_parents(level):
-        global __package__
-        file = Path(__file__).resolve()
-        parent, top = file.parent, file.parents[level]
-
-        sys.path.append(str(top))
-        try:
-            sys.path.remove(str(parent))
-        except ValueError:  # giá rimosso
-            pass
-
-        __package__ = '.'.join(parent.parts[len(top.parts):])
-
-import_parents(4)
 
 
 from ....lib import project_lib

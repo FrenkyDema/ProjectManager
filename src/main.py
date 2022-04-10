@@ -1,6 +1,9 @@
 from pathlib import Path
-import sys, types
+import sys, types, os, re, json
 from enum import Enum
+from genericpath import isdir, isfile
+from customtkinter import *
+from tkinter import StringVar, messagebox, scrolledtext
 
 def import_parents(level):
         global __package__

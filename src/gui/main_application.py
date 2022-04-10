@@ -1,7 +1,7 @@
 from customtkinter import *
 
 from .pages import main_page, settings_page, new_project_page
-from .main_page_enum import MainPageEnum
+from ..gui import main_page_enum
 
 # Modes: "System" (standard), "Dark", "Light"
 set_appearance_mode("System")
@@ -61,21 +61,21 @@ class App(CTk):
                                             text="Nuovo Progetto",
                                             # <- custom tuple-color
                                             fg_color=("gray75", "gray30"),
-                                            command=lambda: self.chose_frame(MainPageEnum.NEW_PROJECT))
+                                            command=lambda: self.chose_frame(main_page_enum.MainPageEnum.NEW_PROJECT))
         self.new_project_button.grid(row=2, column=0, pady=10, padx=20)
 
         self.sort_project_button = CTkButton(master=self.frame_left,
                                              text="Ordina Progetti",
                                              # <- custom tuple-color
                                              fg_color=("gray75", "gray30"),
-                                             command=lambda: self.chose_frame(MainPageEnum.SORT_PROJECT))
+                                             command=lambda: self.chose_frame(main_page_enum.MainPageEnum.SORT_PROJECT))
         self.sort_project_button.grid(row=3, column=0, pady=10, padx=20)
         self.sort_project_button.config(state=tkinter.DISABLED)
 
         self.settings_button = CTkButton(master=self.frame_left,
                                          text="Settings",
                                          fg_color=("gray75", "gray30"),  # <- custom tuple-color
-                                         command=lambda: self.chose_frame(MainPageEnum.SETTINGS))
+                                         command=lambda: self.chose_frame(main_page_enum.MainPageEnum.SETTINGS))
         self.settings_button.grid(
             row=9, column=0, pady=10, padx=20, sticky="w")
 
@@ -95,14 +95,14 @@ class App(CTk):
 
     def chose_frame(self, page_type):
         match page_type:
-            case MainPageEnum.NEW_PROJECT:
+            case main_page_enum.MainPageEnum.NEW_PROJECT:
                 self.change_right_frame(new_project_page.NewProjectPage(self))
 
-            case MainPageEnum.SORT_PROJECT:
+            case main_page_enum.MainPageEnum.SORT_PROJECT:
                 # TODO sort project
                 pass
 
-            case MainPageEnum.SETTINGS:
+            case main_page_enum.MainPageEnum.SETTINGS:
                 self.change_right_frame(settings_page.SettingsPage(self, self))
 
             case _:
