@@ -6,7 +6,7 @@ import json
 import re
 from customtkinter import *
 from tkinter import StringVar, messagebox, scrolledtext
-import project_lib
+import bin.project_lib as project_lib
 
 PROJECT_SETTINGS_FILE = "project_settings.json"
 CONFIG_FILE = "config.json"

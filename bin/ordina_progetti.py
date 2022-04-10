@@ -4,7 +4,7 @@ __version__ = "0101 2021/10/12"
 
 import glob
 import shutil
-from project_lib import *
+from bin.project_lib import *
 
 
 boold = True

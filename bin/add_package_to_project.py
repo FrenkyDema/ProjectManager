@@ -2,7 +2,7 @@
 __autor__ = "Francesco"
 __version__ = "0101 2021/11/30"
 
-from project_lib import *
+from bin.project_lib import *
 
 
 exist = False

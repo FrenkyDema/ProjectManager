@@ -7,7 +7,7 @@ __version__ = "0101 2021/10/12"
 import importlib
 from pathlib import Path
 import sys
-from project_lib import *
+from bin.project_lib import *
 
 exist = False
 percorso, tail = os.path.split(__file__)
