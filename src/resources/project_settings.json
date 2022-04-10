@@ -4,11 +4,9 @@
     "cartella_bin": "bin",
     "cartella_doc": "doc",
     "cartella_file": "file",
-    "linguaggi_selezionati": [
-        "java"
-    ],
+    "linguaggi_selezionati": [],
     "descrizione": "",
     "auto_readme": false,
     "nome_progetto": "",
-    "percorso": "C:/Users/frenk/Desktop"
+    "percorso": ""
 }

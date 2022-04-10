@@ -43,7 +43,7 @@ class NewProjectPage(CTkFrame):
             command=self.create_recent_toplevel)
         self.recent_button.grid(
             row=0, column=0, columnspan=3, padx=10, pady=10, sticky="en")
-
+        self.recent_button.config(state=tkinter.DISABLED)
 
         self.entry_text = StringVar()
         self.project_name_entry = self.init_CTkEntry()
@@ -106,6 +106,7 @@ class NewProjectPage(CTkFrame):
                                             text="Auto Readme",
                                             command=self.change_auto_readme)
         self.auto_readme_switch.grid(row=5, column=1, padx=40, pady=15)
+        # self.auto_readme_switch.config(state=tkinter.DISABLED)
 
         self.lenguage_button = CTkButton(
             self,
