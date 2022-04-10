@@ -2,7 +2,7 @@
 __autor__ = "Francesco"
 __version__ = "0101 2022/03/19"
 from customtkinter import *
-from tkinter import StringVar, messagebox, scrolledtext
+from tkinter import StringVar, filedialog, messagebox, scrolledtext
 
 from ...lib import project_lib
 
@@ -16,9 +16,9 @@ class NewProjectPage(CTkFrame):
         super().__init__(master)
 
         # configure grid layout (3x7)
-        for i in [0, 1, 2, 3]:
+        for i in [0, 1, 2, 3, 4]:
             self.rowconfigure(i, weight=1)
-        self.rowconfigure(5, weight=10)
+        self.rowconfigure(6, weight=10)
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=1)
         self.columnconfigure(2, weight=1)
@@ -31,39 +31,66 @@ class NewProjectPage(CTkFrame):
         self.entry_text = StringVar()
 
         self.project_name_entry = self.init_CTkEntry()
-        self.set_default_values()
 
         self.project_name_entry.grid(
             row=1, column=0, columnspan=3, padx=20, pady=20)
 
         self.add_entry_text_trace()
 
+        self.directory_frame = CTkFrame(master=self)
+        self.directory_frame.grid(row=2, column=0, columnspan=3, pady=20, padx=20)
+
+        self.directory_frame.columnconfigure(0, weight=1)
+        self.directory_frame.columnconfigure(1, weight=1)
+        self.directory_frame.columnconfigure(2, weight=1)
+        
+        
+        self.root_display = CTkLabel(self.directory_frame,
+                                     width=400,
+                                     height=45)
+
+        self.root_display.grid(
+            row=0, column=0, columnspan=2, padx=10, sticky="e")
+
+
+        self.chose_directory_button = CTkButton(
+            self.directory_frame, 
+            height=45,
+            text="Scegli destinazione",
+            fg_color=("gray75", "gray30"),  # <- custom tuple-color
+            command=self.chose_directory)
+        self.chose_directory_button.grid(row=0, column=2, sticky="w")
+
+
+
         self.description_window_open = False
         self.lenguage_button = CTkButton(
             self, text="Inserisci descrizione",
             fg_color=("gray75", "gray30"),  # <- custom tuple-color
             command=self.create_description_toplevel)
-        self.lenguage_button.grid(row=2, column=1, padx=40)
+        self.lenguage_button.grid(row=3, column=1, padx=40)
 
         self.lenguage_window_open = False
         self.lenguage_button = CTkButton(
             self, text="Scegli linguaggio",
             fg_color=("gray75", "gray30"),  # <- custom tuple-color
             command=self.create_lenguage_toplevel)
-        self.lenguage_button.grid(row=3, column=1, padx=30)
+        self.lenguage_button.grid(row=4, column=1, padx=30, pady=20)
 
         self.auto_readme = False
         self.auto_readme_switch = CTkSwitch(master=self,
                                             text="Abilitare AutoReadme",
                                             command=self.change_auto_readme)
-        self.auto_readme_switch.grid(row=4, column=1, padx=40, pady=30)
+        self.auto_readme_switch.grid(row=5, column=1, padx=40, pady=15)
 
         self.lenguage_button = CTkButton(
             self, text="Crea Progetto",
             fg_color=("gray75", "gray30"),  # <- custom tuple-color
             command=self.submit_all)
         self.lenguage_button.grid(
-            row=5, column=0, columnspan=3, padx=30, pady=30, sticky="se")
+            row=6, column=0, columnspan=3, padx=30, pady=30, sticky="se")
+
+        self.set_default_values()
 
     def set_default_values(self):
 
@@ -77,6 +104,9 @@ class NewProjectPage(CTkFrame):
             self.project_name_entry.grid(
                 row=1, column=0, columnspan=3, padx=20, pady=20)
             self.add_entry_text_trace()
+        
+        directory = project_lib.get_key_value_JSON(PROJECT_SETTINGS_FILE, "percorso")
+        self.root_display.set_text(directory)
 
     def init_CTkEntry(self):
         return CTkEntry(master=self,
@@ -97,6 +127,11 @@ class NewProjectPage(CTkFrame):
     def change_projec_title(self, entry_text: StringVar):
         project_lib.update_key_JSON(
             PROJECT_SETTINGS_FILE, "nome_progetto", entry_text.get())
+
+    def chose_directory(self):
+        directory = filedialog.askdirectory()
+        self.root_display.set_text(directory.replace("\\", "/"))
+        project_lib.update_key_JSON(PROJECT_SETTINGS_FILE, "percorso", directory)
 
     def create_lenguage_toplevel(self):
         def on_closing():
@@ -175,7 +210,7 @@ class NewProjectPage(CTkFrame):
             self.lenguages_window.focus_force()
 
     def create_description_toplevel(self):
-        
+
         def clear_text():
             text_area.delete("1.0", "end")
 
@@ -260,7 +295,7 @@ class NewProjectPage(CTkFrame):
         return True
 
     def submit_all(self):
-    
+
         project_title = self.project_name_entry.get()
         if not self.project_title_check(project_title) or not self.lenguage_selected_check():
             return
