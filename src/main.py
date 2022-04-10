@@ -3,7 +3,7 @@ import sys, types, os, re, json
 from enum import Enum
 from genericpath import isdir, isfile
 from customtkinter import *
-from tkinter import StringVar, messagebox, scrolledtext
+from tkinter import StringVar, messagebox, scrolledtext, filedialog
 from PIL import Image
 from PIL.ImageTk import PhotoImage
 

@@ -44,8 +44,8 @@ class NewProjectPage(CTkFrame):
         self.recent_button.grid(
             row=0, column=0, columnspan=3, padx=10, pady=10, sticky="en")
 
-        self.entry_text = StringVar()
 
+        self.entry_text = StringVar()
         self.project_name_entry = self.init_CTkEntry()
 
         self.project_name_entry.grid(
@@ -108,7 +108,7 @@ class NewProjectPage(CTkFrame):
         self.auto_readme_switch.grid(row=5, column=1, padx=40, pady=15)
 
         self.lenguage_button = CTkButton(
-            self, 
+            self,
             height=40,
             text="Crea Progetto",
             compound="right",

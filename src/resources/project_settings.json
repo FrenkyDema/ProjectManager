@@ -4,9 +4,11 @@
     "cartella_bin": "bin",
     "cartella_doc": "doc",
     "cartella_file": "file",
-    "linguaggi_selezionati": [],
+    "linguaggi_selezionati": [
+        "java"
+    ],
     "descrizione": "",
     "auto_readme": false,
     "nome_progetto": "",
-    "percorso": "C:/Users/frenk/OneDrive/Documenti/School/INI/Test"
+    "percorso": "C:/Users/frenk/Desktop"
 }

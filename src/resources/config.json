@@ -1,7 +1,6 @@
 {
     "supported_leguages": {
-        "java": "java",
-        "python": "py"
+        "java": "java"
     },
     "tags": [
         "prefisso_cartella",

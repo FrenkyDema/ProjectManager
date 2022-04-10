@@ -2,7 +2,7 @@ from customtkinter import *
 from PIL import Image
 from PIL.ImageTk import PhotoImage
 
-from lib import project_lib
+from ..lib import project_lib
 
 from .pages import main_page, settings_page, new_project_page
 from ..gui import main_page_enum
