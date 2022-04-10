@@ -4,6 +4,8 @@ from enum import Enum
 from genericpath import isdir, isfile
 from customtkinter import *
 from tkinter import StringVar, messagebox, scrolledtext
+from PIL import Image
+from PIL.ImageTk import PhotoImage
 
 def import_parents(level):
         global __package__
@@ -39,10 +41,11 @@ from .gui.pages.settings_pages import edit_header_page
 from .gui import main_application
 from .gui import main_page_enum
 
-if __name__ == "__main__":
 
+
+if __name__ == "__main__":
 
     project_lib.default_project_settings_values()
 
-    app = main_application.App()
+    app = main_application.App()    
     app.start()

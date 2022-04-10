@@ -1,4 +1,8 @@
 from customtkinter import *
+from PIL import Image
+from PIL.ImageTk import PhotoImage
+
+from lib import project_lib
 
 from .pages import main_page, settings_page, new_project_page
 from ..gui import main_page_enum
@@ -60,21 +64,26 @@ class App(CTk):
         self.new_project_button = CTkButton(master=self.frame_left,
                                             text="Nuovo Progetto",
                                             # <- custom tuple-color
-                                            fg_color=("gray75", "gray30"),
+                                            fg_color=("gray65", "gray25"),
                                             command=lambda: self.chose_frame(main_page_enum.MainPageEnum.NEW_PROJECT))
         self.new_project_button.grid(row=2, column=0, pady=10, padx=20)
 
         self.sort_project_button = CTkButton(master=self.frame_left,
                                              text="Ordina Progetti",
                                              # <- custom tuple-color
-                                             fg_color=("gray75", "gray30"),
+                                             fg_color=("gray65", "gray25"),
                                              command=lambda: self.chose_frame(main_page_enum.MainPageEnum.SORT_PROJECT))
         self.sort_project_button.grid(row=3, column=0, pady=10, padx=20)
         self.sort_project_button.config(state=tkinter.DISABLED)
 
         self.settings_button = CTkButton(master=self.frame_left,
                                          text="Settings",
-                                         fg_color=("gray75", "gray30"),  # <- custom tuple-color
+                                         height=35,
+                                         compound="right",
+                                         image=PhotoImage(Image.open(project_lib.get_image_path(
+                                                "settings_icon.png")).resize((30, 30))),
+                                         # <- custom tuple-color
+                                         fg_color=("gray65", "gray25"),
                                          command=lambda: self.chose_frame(main_page_enum.MainPageEnum.SETTINGS))
         self.settings_button.grid(
             row=9, column=0, pady=10, padx=20, sticky="w")
@@ -122,6 +131,3 @@ class App(CTk):
 
     def start(self):
         self.mainloop()
-
-
-    

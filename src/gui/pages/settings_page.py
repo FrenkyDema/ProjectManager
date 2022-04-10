@@ -28,7 +28,7 @@ class SettingsPage(CTkFrame):
         button_1 = CTkButton(
             master=self,
             text="Modifica intestazioni",
-            fg_color=("gray75", "gray30"),
+            fg_color=("gray65", "gray25"),
             command=lambda: self.change_page(settings_page_enum.SettingsPageEnum.EDIT_HEADER))
         button_1.grid(row=1, column=1,
                       padx=20, sticky="we")
@@ -36,7 +36,7 @@ class SettingsPage(CTkFrame):
         edit_variable_button = CTkButton(
             master=self,
             text="Modifica variabili",
-            fg_color=("gray75", "gray30"),
+            fg_color=("gray65", "gray25"),
             command=lambda: self.change_page(settings_page_enum.SettingsPageEnum.EDIT_VARIABLE))
         edit_variable_button.grid(row=2, column=1,
                                   padx=20, sticky="we")
@@ -44,7 +44,7 @@ class SettingsPage(CTkFrame):
 
         edit_flag_button = CTkButton(
             master=self, text="Modifica flags",
-            fg_color=("gray75", "gray30"),
+            fg_color=("gray65", "gray25"),
             command=lambda: self.change_page(settings_page_enum.SettingsPageEnum.EDIT_FLAG))
         edit_flag_button.grid(row=3, column=1,
                               padx=20, sticky="we")

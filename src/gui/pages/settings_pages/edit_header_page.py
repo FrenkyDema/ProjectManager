@@ -40,7 +40,7 @@ class EditHeadersPage(CTkFrame):
             var = CTkButton(
                 master=self,
                 text=f"Modifica {header.split('.')[0]}",
-                fg_color=("gray75", "gray30"),
+                fg_color=("gray65", "gray25"),
                 command=lambda bound_header=header: open_header_editor(bound_header))
 
             var.grid(row=i, column=1,
@@ -51,7 +51,7 @@ class EditHeadersPage(CTkFrame):
         back_button = CTkButton(
             master=self,
             text=f"Indietro",
-            fg_color=("gray75", "gray30"),
+            fg_color=("gray65", "gray25"),
             command=lambda: self.app.chose_frame(main_page_enum.MainPageEnum.SETTINGS))
 
         back_button.grid(row=7, column=0, columnspan=3,
@@ -140,21 +140,21 @@ class EditHeadersPage(CTkFrame):
 
                 submit_button = CTkButton(master=frame_right,
                                           text="Fatto",
-                                          fg_color=("gray75", "gray30"),
+                                          fg_color=("gray65", "gray25"),
                                           command=lambda: on_closing(window, True))
                 submit_button.grid(row=1, column=2, pady=10,
                                    padx=10, sticky="se")
 
                 cancel_button = CTkButton(master=frame_right,
                                           text="Annulla",
-                                          fg_color=("gray75", "gray30"),
+                                          fg_color=("gray65", "gray25"),
                                           command=lambda: on_closing(window, False))
                 cancel_button.grid(row=1, column=1, pady=10,
                                    padx=10, sticky="s")
 
                 clear_button = CTkButton(master=frame_right,
                                          text="Cancella",
-                                         fg_color=("gray75", "gray30"),
+                                         fg_color=("gray65", "gray25"),
                                          command=clear_text)
                 clear_button.grid(row=1, column=0, pady=10,
                                   padx=10, sticky="sw")
