@@ -4,11 +4,10 @@
     "cartella_bin": "bin",
     "cartella_doc": "doc",
     "cartella_file": "file",
-    "linguaggi_selezionati": [
-        "java"
-    ],
+    "linguaggio_selezionato": "",
     "descrizione": "",
     "auto_readme": false,
-    "nome_progetto": "",
-    "percorso": ""
+    "nome_progetto": "eawdsawd",
+    "percorso": "",
+    "linguaggi_selezionati": []
 }

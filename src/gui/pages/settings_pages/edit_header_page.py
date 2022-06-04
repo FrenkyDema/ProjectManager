@@ -85,7 +85,7 @@ class EditHeadersPage(CTkFrame):
                 window.columnconfigure(0, weight=1)
                 window.columnconfigure(1, weight=10)
                 window.rowconfigure(0, weight=1)
-                window.rowconfigure(1, weight=10)
+                window.rowconfigure(1, weight=5)
 
                 # ========= config frame left =========
 
@@ -123,12 +123,13 @@ class EditHeadersPage(CTkFrame):
                                  pady=20, sticky="nswe")
 
                 # configure grid layout (3x2)
-                frame_right.rowconfigure(1, weight=10)
+                frame_right.rowconfigure(0, weight=20)
+                frame_right.rowconfigure(1, weight=1)
                 frame_right.columnconfigure(0, weight=1)
                 frame_right.columnconfigure(1, weight=1)
                 frame_right.columnconfigure(2, weight=1)
 
-                text_editor = scrolledtext.ScrolledText(frame_right, wrap=tkinter.WORD,
+                text_editor = scrolledtext.ScrolledText(frame_right, 
                                                         font=("Roboto Medium", 10))
                 text_editor.insert(
                     tkinter.INSERT, project_lib.get_header_text(header).rstrip("\n"))
@@ -144,18 +145,18 @@ class EditHeadersPage(CTkFrame):
                                           fg_color=("gray65", "gray25"),
                                           command=lambda: on_closing(window, True))
                 submit_button.grid(row=1, column=2, pady=10,
-                                   padx=10, sticky="se")
+                                   padx=10, sticky="e")
 
                 cancel_button = CTkButton(master=frame_right,
                                           text="Annulla",
                                           fg_color=("gray65", "gray25"),
                                           command=lambda: on_closing(window, False))
                 cancel_button.grid(row=1, column=1, pady=10,
-                                   padx=10, sticky="s")
+                                   padx=10)
 
                 clear_button = CTkButton(master=frame_right,
                                          text="Cancella",
                                          fg_color=("gray65", "gray25"),
                                          command=clear_text)
                 clear_button.grid(row=1, column=0, pady=10,
-                                  padx=10, sticky="sw")
+                                  padx=10, sticky="w")

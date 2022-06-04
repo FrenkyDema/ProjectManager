@@ -1,6 +1,7 @@
 {
     "supported_leguages": {
-        "java": "java"
+        "java": "java",
+        "python": "py"
     },
     "tags": [
         "prefisso_cartella",
@@ -14,7 +15,7 @@
     ],
     "work_space_name": "src",
     "default_project_config": {
-        "linguaggi_selezionati": [],
+        "linguaggio_selezionato": "",
         "nome_progetto": "",
         "descrizione": "",
         "auto_readme": false

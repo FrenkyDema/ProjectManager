@@ -1,0 +1,13 @@
+# -*- coding: utf-8 -*-
+__autor__ = "Francesco"
+__version__ = "01.01 2019/09/18"
+
+boold = False
+if __name__ == "__main__":
+    if boold:
+        print("Start")
+
+    print("Sequenza Istruzioni")
+
+    if boold:
+        print("End")

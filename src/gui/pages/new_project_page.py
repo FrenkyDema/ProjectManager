@@ -65,7 +65,6 @@ class NewProjectPage(CTkFrame):
         self.root_display = CTkLabel(self.directory_frame,
                                      width=400,
                                      height=45)
-
         self.root_display.grid(
             row=0, column=0, columnspan=2, padx=10, sticky="e")
 
@@ -91,23 +90,24 @@ class NewProjectPage(CTkFrame):
             command=self.create_description_toplevel)
         self.lenguage_button.grid(row=3, column=1, padx=40, pady=15)
 
-        self.lenguage_window_open = False
-        self.lenguage_button = CTkButton(
-            self,
-            text="Scegli linguaggio",
-            compound="right",
-            image=PhotoImage(Image.open(project_lib.get_image_path(
-                "code_icon.png")).resize((30, 30))),
-            fg_color=("gray65", "gray25"),  # <- custom tuple-color
-            command=self.create_lenguage_toplevel)
-        self.lenguage_button.grid(row=4, column=1, padx=30, pady=15)
+
+        supported_lenguage = project_lib.get_key_value_JSON(
+                "config.json", "supported_leguages").keys()
+        self.lenguage_optionmenu_var = StringVar(value="Scegli linguaggio")  # set initial value
+        self.lenguage_combobox = CTkOptionMenu(
+            master=self,
+            values=list(supported_lenguage),
+            fg_color=("gray65", "gray25"),
+            command=self.optionmenu_callback,
+            variable=self.lenguage_optionmenu_var)
+        self.lenguage_combobox.grid(row=4, column=1, padx=30, pady=15)
 
         self.auto_readme = False
         self.auto_readme_switch = CTkSwitch(master=self,
                                             text="Auto Readme",
                                             command=self.change_auto_readme)
         self.auto_readme_switch.grid(row=5, column=1, padx=40, pady=15)
-        # self.auto_readme_switch.config(state=tkinter.DISABLED)
+        self.auto_readme_switch.config(state=tkinter.DISABLED)
 
         self.lenguage_button = CTkButton(
             self,
@@ -122,6 +122,11 @@ class NewProjectPage(CTkFrame):
             row=6, column=0, columnspan=3, padx=10, pady=10, sticky="se")
 
         self.set_default_values()
+
+    def optionmenu_callback(self, choice):
+        
+        project_lib.update_key_JSON(
+            PROJECT_SETTINGS_FILE, "linguaggio_selezionato", choice)
 
     def set_default_values(self):
 
@@ -180,7 +185,7 @@ class NewProjectPage(CTkFrame):
             except KeyError:
                 return
             selected_lenguage_list: list = project_lib.get_key_value_JSON(
-                PROJECT_SETTINGS_FILE, "linguaggi_selezionati")
+                PROJECT_SETTINGS_FILE, "linguaggio_selezionato")
             if value:
                 selected_lenguage_list.append(lenguage)
             else:
@@ -189,7 +194,7 @@ class NewProjectPage(CTkFrame):
                 except ValueError:
                     pass
             project_lib.update_key_JSON(
-                PROJECT_SETTINGS_FILE, "linguaggi_selezionati", selected_lenguage_list)
+                PROJECT_SETTINGS_FILE, "linguaggio_selezionato", selected_lenguage_list)
 
         if not self.lenguage_window_open:
             self.lenguage_window_open = True
@@ -221,7 +226,7 @@ class NewProjectPage(CTkFrame):
 
             lenguage_switch = {}
             selected_lenguage_list: list = project_lib.get_key_value_JSON(
-                PROJECT_SETTINGS_FILE, "linguaggi_selezionati")
+                PROJECT_SETTINGS_FILE, "linguaggio_selezionato")
             for lenguage in supported_leguages:
                 i += 1
                 var = CTkSwitch(master=frame,
@@ -352,10 +357,10 @@ class NewProjectPage(CTkFrame):
         return False
 
     def lenguage_selected_check(self):
-        if project_lib.get_key_value_JSON(PROJECT_SETTINGS_FILE, "linguaggi_selezionati") == []:
+        if project_lib.get_key_value_JSON(PROJECT_SETTINGS_FILE, "linguaggio_selezionato") == "":
             messagebox.showerror(
                 "Error", "Devi selezionare minimo 1 linguaggio")
-            self.create_lenguage_toplevel()
+            self.lenguage_combobox.open_dropdown_menu()
             return True
         return False
 
