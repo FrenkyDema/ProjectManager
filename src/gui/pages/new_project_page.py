@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 __autor__ = "Francesco"
 __version__ = "0101 2022/03/19"
+import tkinter
 from customtkinter import *
 from tkinter import StringVar, filedialog, messagebox, scrolledtext
 from PIL import Image

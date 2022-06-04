@@ -1,3 +1,4 @@
+import tkinter
 from customtkinter import *
 from PIL import Image
 from PIL.ImageTk import PhotoImage

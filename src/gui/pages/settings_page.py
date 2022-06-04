@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 __autor__ = "Francesco"
 __version__ = "0101 2022/03/16"
+import tkinter
 from customtkinter import *
-
 from ...gui import main_application
 from ..pages import settings_page_enum
 from .settings_pages import edit_header_page

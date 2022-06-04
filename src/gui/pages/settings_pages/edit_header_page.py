@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 __autor__ = "Francesco"
 __version__ = "0101 2022/03/16"
+import tkinter
 from customtkinter import *
 from tkinter import messagebox, scrolledtext
 
