@@ -1,5 +1,7 @@
 # ProjectManager
----
+
+![New project page](https://user-images.githubusercontent.com/73547745/163658045-b8883972-9cbc-47e1-b309-c34ff1e42a79.png)
+
 
 ## Requisiti
 
