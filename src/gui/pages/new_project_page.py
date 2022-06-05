@@ -10,13 +10,20 @@ from PIL.ImageTk import PhotoImage
 from genericpath import isdir
 
 from ...lib import project_lib
+from ...gui import main_application
+from ..pages import new_project_enum
+from .new_project_pages import recent_project_page
+
 
 PROJECT_SETTINGS_FILE = "project_settings.json"
 
 
-class NewProjectPage(CTkFrame):
+class NewProjectPage(CTkFrame): 
     def __init__(self, master):
 
+
+    # def __init__(self, master, app: main_application.App):
+    #     self.app = app
         super().__init__(master)
 
         # configure grid layout (3x7)
@@ -41,17 +48,15 @@ class NewProjectPage(CTkFrame):
             image=PhotoImage(Image.open(project_lib.get_image_path(
                 "recent_icon.png")).resize((30, 30))),
             fg_color=("gray65", "gray25"),  # <- custom tuple-color
-            command=self.create_recent_toplevel)
+            command=lambda: self.change_page(new_project_enum.NewProjectPageEnum.RECENT))
         self.recent_button.grid(
             row=0, column=0, columnspan=3, padx=10, pady=10, sticky="en")
-        self.recent_button.config(state=tkinter.DISABLED)
+        # self.recent_button.config(state=tkinter.DISABLED)
 
         self.entry_text = StringVar()
         self.project_name_entry = self.init_CTkEntry()
-
         self.project_name_entry.grid(
             row=1, column=0, columnspan=3, padx=20, pady=15)
-
         self.add_entry_text_trace()
 
         self.directory_frame = CTkFrame(master=self)
@@ -90,10 +95,10 @@ class NewProjectPage(CTkFrame):
             command=self.create_description_toplevel)
         self.lenguage_button.grid(row=3, column=1, padx=40, pady=15)
 
-
         supported_lenguage = project_lib.get_key_value_JSON(
-                "config.json", "supported_leguages").keys()
-        self.lenguage_optionmenu_var = StringVar(value="Scegli linguaggio")  # set initial value
+            "config.json", "supported_leguages").keys()
+        self.lenguage_optionmenu_var = StringVar(
+            value="Scegli linguaggio")  # set initial value
         self.lenguage_combobox = CTkOptionMenu(
             master=self,
             values=list(supported_lenguage),
@@ -124,7 +129,7 @@ class NewProjectPage(CTkFrame):
         self.set_default_values()
 
     def optionmenu_callback(self, choice):
-        
+
         project_lib.update_key_JSON(
             PROJECT_SETTINGS_FILE, "linguaggio_selezionato", choice)
 
@@ -170,82 +175,6 @@ class NewProjectPage(CTkFrame):
         self.root_display.set_text(directory.replace("\\", "/"))
         project_lib.update_key_JSON(
             PROJECT_SETTINGS_FILE, "percorso", directory)
-
-    def create_lenguage_toplevel(self):
-        def on_closing():
-            if self.lenguage_selected_check():
-                return
-
-            self.lenguage_window_open = False
-            self.lenguages_window.destroy()
-
-        def select_lenguage(lenguage):
-            try:
-                value = lenguage_switch[lenguage].get()
-            except KeyError:
-                return
-            selected_lenguage_list: list = project_lib.get_key_value_JSON(
-                PROJECT_SETTINGS_FILE, "linguaggio_selezionato")
-            if value:
-                selected_lenguage_list.append(lenguage)
-            else:
-                try:
-                    selected_lenguage_list.remove(lenguage)
-                except ValueError:
-                    pass
-            project_lib.update_key_JSON(
-                PROJECT_SETTINGS_FILE, "linguaggio_selezionato", selected_lenguage_list)
-
-        if not self.lenguage_window_open:
-            self.lenguage_window_open = True
-            self.lenguages_window = CTkToplevel(self)
-            self.lenguages_window.geometry("350x300")
-
-            self.lenguages_window.protocol("WM_DELETE_WINDOW", on_closing)
-
-            self.lenguages_window.columnconfigure(0, weight=1)
-            self.lenguages_window.rowconfigure(1, weight=1)
-
-            frame = CTkFrame(master=self.lenguages_window,
-                             corner_radius=10)
-            frame.grid(row=1, column=0, padx=20, pady=20, sticky="nswe")
-            # configure grid layout (3x7)
-            for i in range(3):
-                frame.rowconfigure(i, weight=1)
-            frame.rowconfigure(7, weight=10)
-            frame.columnconfigure(0, weight=1)
-
-            # create label on CTkToplevel self.lenguages_window
-
-            label = CTkLabel(self.lenguages_window, text="Selezione dei linguaggi",
-                             text_font=("Roboto Medium", 15))
-            label.grid(row=0, column=0, pady=10)
-
-            supported_leguages = project_lib.get_key_value_JSON(
-                "config.json", "supported_leguages")
-
-            lenguage_switch = {}
-            selected_lenguage_list: list = project_lib.get_key_value_JSON(
-                PROJECT_SETTINGS_FILE, "linguaggio_selezionato")
-            for lenguage in supported_leguages:
-                i += 1
-                var = CTkSwitch(master=frame,
-                                text=lenguage,
-                                command=lambda bound_lenguage=lenguage: select_lenguage(
-                                    bound_lenguage))
-                var.grid(row=i, column=0, pady=10)
-                if lenguage in selected_lenguage_list:
-                    var.select()
-
-                lenguage_switch[lenguage] = var
-            submit_button = CTkButton(master=frame,
-                                      text="Fatto",
-                                      fg_color=("gray75", "gray30"),
-                                      command=on_closing)
-            submit_button.grid(row=7, column=0, pady=10, padx=10, sticky="se")
-
-        elif self.lenguages_window != None:
-            self.lenguages_window.focus_force()
 
     def create_description_toplevel(self):
 
@@ -312,6 +241,19 @@ class NewProjectPage(CTkFrame):
 
         elif self.description_window != None:
             self.description_window.focus_force()
+
+    def change_page(self, page_type):
+        return
+        match page_type:
+            case new_project_enum.NewProjectPageEnum.DESCRIPRION:
+                pass
+
+            case new_project_enum.NewProjectPageEnum.RECENT:
+                self.app.change_right_frame(
+                    recent_project_page.RecentProjectPage(self.app, self.app))
+
+            case _:
+                pass
 
     def create_recent_toplevel(self):
         def on_closing():

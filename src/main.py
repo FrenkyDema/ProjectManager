@@ -28,7 +28,11 @@ import_parents(1)
 from .lib import project_lib
 
 from .gui.pages import main_page
+
 from .gui.pages import new_project_page
+from .gui.pages import new_project_enum
+from .gui.pages.new_project_pages import recent_project_page
+
 from .gui.pages import settings_page
 from .gui.pages import settings_page_enum
 from .gui.pages.settings_pages import edit_header_page
