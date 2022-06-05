@@ -7,14 +7,14 @@ from tkinter import messagebox, scrolledtext
 
 
 from ....lib import project_lib
-from ....gui import main_application, main_page_enum
+from ....gui import main_page_enum
 
 
 CONFIG_FILE = "config.json"
 
 
 class RecentProjectPage(CTkFrame):
-    def __init__(self, master, app: main_application.App):
+    def __init__(self, master, app):
         self.app = app
         super().__init__(master)
 
@@ -27,7 +27,7 @@ class RecentProjectPage(CTkFrame):
         self.columnconfigure(2, weight=1)
 
         self.title = CTkLabel(master=self,
-                              text="Modifica intestazioni",
+                              text="Recenti",
                               text_font=("Roboto Medium", 20))  # font name and size in px
         self.title.grid(row=0, column=1, pady=20)
 
@@ -35,7 +35,7 @@ class RecentProjectPage(CTkFrame):
             master=self,
             text=f"Indietro",
             fg_color=("gray65", "gray25"),
-            command=lambda: self.app.chose_frame(main_page_enum.MainPageEnum.SETTINGS))
+            command=lambda: self.app.chose_frame(main_page_enum.MainPageEnum.NEW_PROJECT))
 
         back_button.grid(row=7, column=0, columnspan=3,
                          padx=20, pady=20, sticky="es")

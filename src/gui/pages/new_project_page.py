@@ -13,17 +13,15 @@ from ...lib import project_lib
 from ...gui import main_application
 from ..pages import new_project_enum
 from .new_project_pages import recent_project_page
+from .new_project_pages import edit_description_page
 
 
 PROJECT_SETTINGS_FILE = "project_settings.json"
 
 
-class NewProjectPage(CTkFrame): 
-    def __init__(self, master):
-
-
-    # def __init__(self, master, app: main_application.App):
-    #     self.app = app
+class NewProjectPage(CTkFrame):
+    def __init__(self, master, app):
+        self.app = app
         super().__init__(master)
 
         # configure grid layout (3x7)
@@ -38,7 +36,6 @@ class NewProjectPage(CTkFrame):
                               text_font=("Roboto Medium", 20))  # font name and size in px
         self.title.grid(row=0, column=1, pady=20)
 
-        self.recent_project_window_open = False
         self.recent_button = CTkButton(
             self,
             text="",
@@ -51,7 +48,6 @@ class NewProjectPage(CTkFrame):
             command=lambda: self.change_page(new_project_enum.NewProjectPageEnum.RECENT))
         self.recent_button.grid(
             row=0, column=0, columnspan=3, padx=10, pady=10, sticky="en")
-        # self.recent_button.config(state=tkinter.DISABLED)
 
         self.entry_text = StringVar()
         self.project_name_entry = self.init_CTkEntry()
@@ -84,16 +80,15 @@ class NewProjectPage(CTkFrame):
             command=self.chose_directory)
         self.chose_directory_button.grid(row=0, column=2, sticky="w")
 
-        self.description_window_open = False
-        self.lenguage_button = CTkButton(
+        self.description_button = CTkButton(
             self,
             text="Descrizione",
             compound="right",
             image=PhotoImage(Image.open(project_lib.get_image_path(
                 "description_icon.png")).resize((30, 30))),
             fg_color=("gray65", "gray25"),  # <- custom tuple-color
-            command=self.create_description_toplevel)
-        self.lenguage_button.grid(row=3, column=1, padx=40, pady=15)
+            command=lambda: self.change_page(new_project_enum.NewProjectPageEnum.DESCRIPRION))
+        self.description_button.grid(row=3, column=1, padx=40, pady=15)
 
         supported_lenguage = project_lib.get_key_value_JSON(
             "config.json", "supported_leguages").keys()
@@ -176,77 +171,11 @@ class NewProjectPage(CTkFrame):
         project_lib.update_key_JSON(
             PROJECT_SETTINGS_FILE, "percorso", directory)
 
-    def create_description_toplevel(self):
-
-        def clear_text():
-            text_area.delete("1.0", "end")
-
-        def on_closing():
-
-            description = text_area.get("1.0", tkinter.END).rstrip("\n")
-
-            project_lib.update_key_JSON(
-                PROJECT_SETTINGS_FILE, "descrizione", description)
-
-            self.description_window_open = False
-            self.description_window.destroy()
-
-        if not self.description_window_open:
-            self.description_window_open = True
-            self.description_window = CTkToplevel(self)
-            self.description_window.geometry("350x300")
-
-            self.description_window.protocol("WM_DELETE_WINDOW", on_closing)
-
-            self.description_window.columnconfigure(0, weight=1)
-            self.description_window.rowconfigure(1, weight=1)
-
-            frame = CTkFrame(master=self.description_window,
-                             corner_radius=10)
-            frame.grid(row=1, column=0, padx=20, pady=20, sticky="nswe")
-            # configure grid layout (3x7)
-            for i in range(3):
-                frame.rowconfigure(i, weight=1)
-            frame.rowconfigure(5, weight=10)
-            frame.columnconfigure(0, weight=1)
-
-            # create label on CTkToplevel self.description_window
-
-            label = CTkLabel(self.description_window, text="Descrizione",
-                             text_font=("Roboto Medium", 15))
-            label.grid(row=0, column=0, pady=10)
-
-            text_area = scrolledtext.ScrolledText(frame, wrap=tkinter.WORD,
-                                                  width=40, height=8,
-                                                  font=("Roboto Medium", 10))
-            text_area.insert(tkinter.INSERT,
-                             project_lib.get_key_value_JSON(PROJECT_SETTINGS_FILE, "descrizione").rstrip("\n"))
-
-            text_area.grid(column=0, row=0, pady=10, padx=10)
-
-            # placing cursor in text area
-            text_area.focus()
-
-            submit_button = CTkButton(master=frame,
-                                      text="Fatto",
-                                      fg_color=("gray75", "gray30"),
-                                      command=on_closing)
-            submit_button.grid(row=5, column=0, pady=10, padx=10, sticky="se")
-
-            clear_button = CTkButton(master=frame,
-                                     text="Cancella",
-                                     fg_color=("gray75", "gray30"),
-                                     command=clear_text)
-            clear_button.grid(row=5, column=0, pady=10, padx=10, sticky="sw")
-
-        elif self.description_window != None:
-            self.description_window.focus_force()
-
     def change_page(self, page_type):
-        return
         match page_type:
             case new_project_enum.NewProjectPageEnum.DESCRIPRION:
-                pass
+                self.app.change_right_frame(
+                    edit_description_page.EditDescriptionPage(self.app, self.app))
 
             case new_project_enum.NewProjectPageEnum.RECENT:
                 self.app.change_right_frame(
@@ -254,38 +183,6 @@ class NewProjectPage(CTkFrame):
 
             case _:
                 pass
-
-    def create_recent_toplevel(self):
-        def on_closing():
-
-            self.recent_project_window_open = False
-            self.recent_project_window.destroy()
-
-        if not self.recent_project_window_open:
-            self.recent_project_window_open = True
-            self.recent_project_window = CTkToplevel(self)
-            self.recent_project_window.geometry("300x500")
-
-            self.recent_project_window.protocol("WM_DELETE_WINDOW", on_closing)
-
-            self.recent_project_window.columnconfigure(0, weight=1)
-            self.recent_project_window.rowconfigure(1, weight=1)
-
-            frame = CTkFrame(master=self.recent_project_window,
-                             corner_radius=10)
-            frame.grid(row=1, column=0, padx=20, pady=20, sticky="nswe")
-            # configure grid layout (6x1)
-            for i in range(5):
-                frame.rowconfigure(i, weight=1)
-            frame.rowconfigure(5, weight=10)
-            frame.columnconfigure(0, weight=1)
-
-            label = CTkLabel(self.recent_project_window, text="Recenti",
-                             text_font=("Roboto Medium", 15))
-            label.grid(row=0, column=0, pady=10)
-
-        elif self.recent_project_window != None:
-            self.recent_project_window.focus_force()
 
     def project_title_check(self, project_title):
         if (project_title == "" or len(project_title) < 3):
@@ -327,7 +224,7 @@ class NewProjectPage(CTkFrame):
             empty_description = messagebox.askquestion("Empty description",
                                                        'La descrizione é vuota, vuoi aggiungerne una?', icon='warning')
             if empty_description == "yes":
-                self.create_description_toplevel()
+                self.change_page(new_project_enum.NewProjectPageEnum.DESCRIPRION)
                 return
 
         exist, perBin, perDoc = project_lib.make_project_dir()

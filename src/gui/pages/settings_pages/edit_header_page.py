@@ -7,13 +7,13 @@ from tkinter import messagebox, scrolledtext
 
 
 from ....lib import project_lib
-from ....gui import main_application, main_page_enum
+from ....gui import main_page_enum
 
 
 CONFIG_FILE = "config.json"
 
 class EditHeadersPage(CTkFrame):
-    def __init__(self, master, app: main_application.App):
+    def __init__(self, master, app):
         self.app = app
         super().__init__(master)
 

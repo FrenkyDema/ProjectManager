@@ -106,7 +106,7 @@ class App(CTk):
     def chose_frame(self, page_type):
         match page_type:
             case main_page_enum.MainPageEnum.NEW_PROJECT:
-                self.change_right_frame(new_project_page.NewProjectPage(self))
+                self.change_right_frame(new_project_page.NewProjectPage(self, self))
 
             case main_page_enum.MainPageEnum.SORT_PROJECT:
                 # TODO sort project
