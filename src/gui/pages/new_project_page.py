@@ -245,10 +245,8 @@ class NewProjectPage(CTkFrame):
         project_lib.default_project_settings_values()
         self.set_default_values()
 
-        for widget in list(self.children.values()):
-            if widget.__class__ == CTkToplevel:
-                widget.destroy()
-        self.description_window_open = False
-        self.lenguage_window_open = False
-        self.recent_project_window_open = False
+
+        
+
+
         messagebox.showinfo("Confirm", "Progetto creato con successo")
