@@ -16,7 +16,7 @@
       "name": "Python: main.py",
       "type": "python",
       "request": "launch",
-      "preLaunchTask": "clear-editor-history",
+      // "preLaunchTask": "clear-editor-history",
       "program": "C:/Users/frenk/OneDrive/Documenti/School/INI/ProjectManager/src/main.py",
       "console": "integratedTerminal",
       "justMyCode": false

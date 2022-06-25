@@ -3,8 +3,10 @@ __autor__ = "Francesco"
 __version__ = "0101 2022/03/16"
 import tkinter
 from customtkinter import *
+
 from ..pages import settings_page_enum
 from .settings_pages import edit_header_page
+
 
 class SettingsPage(CTkFrame):
     def __init__(self, master, app):
@@ -52,7 +54,8 @@ class SettingsPage(CTkFrame):
     def change_page(self, page_type):
         match page_type:
             case settings_page_enum.SettingsPageEnum.EDIT_HEADER:
-                self.app.change_right_frame(edit_header_page.EditHeadersPage(self.app, self.app))
+                self.app.change_right_frame(
+                    edit_header_page.EditHeadersPage(self.app, self.app))
 
             case settings_page_enum.SettingsPageEnum.EDIT_VARIABLE:
                 pass
