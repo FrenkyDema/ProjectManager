@@ -41,7 +41,7 @@ class SettingsPage(CTkFrame):
             command=lambda: self.change_page(settings_page_enum.SettingsPageEnum.EDIT_VARIABLE))
         edit_variable_button.grid(row=2, column=1,
                                   padx=20, sticky="we")
-        edit_variable_button.configure(state=tkinter.DISABLED)
+        # edit_variable_button.configure(state=tkinter.DISABLED)
 
         edit_flag_button = CTkButton(
             master=self, text="Modifica flags",

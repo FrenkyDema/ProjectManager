@@ -1,12 +1,12 @@
 import tkinter
-from customtkinter import *
+
 from PIL import Image
 from PIL.ImageTk import PhotoImage
-
-from ..lib import project_lib
+from customtkinter import *
 
 from .pages import main_page, settings_page, new_project_page
 from ..gui import main_page_enum
+from ..lib import project_lib
 
 # Modes: "System" (standard), "Dark", "Light"
 set_appearance_mode("Dark")
@@ -82,7 +82,7 @@ class App(CTk):
                                          height=35,
                                          compound="right",
                                          image=PhotoImage(Image.open(project_lib.get_image_path(
-                                                "settings_icon.png")).resize((30, 30))),
+                                             "settings_icon.png")).resize((30, 30))),
                                          # <- custom tuple-color
                                          fg_color=("gray65", "gray25"),
                                          command=lambda: self.chose_frame(main_page_enum.MainPageEnum.SETTINGS))

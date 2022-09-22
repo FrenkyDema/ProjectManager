@@ -247,7 +247,7 @@ class NewProjectPage(CTkFrame):
         self.set_default_values()
 
 
-        
+
 
 
         messagebox.showinfo("Confirm", "Progetto creato con successo")
