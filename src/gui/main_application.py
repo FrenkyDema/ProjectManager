@@ -9,7 +9,7 @@ from .pages import main_page, settings_page, new_project_page
 from ..gui import main_page_enum
 
 # Modes: "System" (standard), "Dark", "Light"
-set_appearance_mode("System")
+set_appearance_mode("Dark")
 # Themes: "blue" (standard), "green", "dark-blue"
 set_default_color_theme("blue")
 
@@ -75,7 +75,7 @@ class App(CTk):
                                              fg_color=("gray65", "gray25"),
                                              command=lambda: self.chose_frame(main_page_enum.MainPageEnum.SORT_PROJECT))
         self.sort_project_button.grid(row=3, column=0, pady=10, padx=20)
-        self.sort_project_button.config(state=tkinter.DISABLED)
+        self.sort_project_button.configure(state=tkinter.DISABLED)
 
         self.settings_button = CTkButton(master=self.frame_left,
                                          text="Settings",

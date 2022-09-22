@@ -3,6 +3,7 @@ __autor__ = "Francesco"
 __version__ = "0101 2022/06/05"
 import tkinter
 from tkinter.tix import AUTO
+
 from customtkinter import *
 from tkinter import messagebox, scrolledtext
 
@@ -56,7 +57,7 @@ class HeaderEditor(CTkFrame):
         label_left.grid(row=0, column=0, sticky="we")
 
         tags_area = tkinter.Text(frame_left,
-                                 width=AUTO,
+                                 width=25,
                                  font=("Roboto Medium", 10))
         tkinter.Scrollbar(tags_area, orient="vertical")
         tags_area.insert(tkinter.INSERT, project_lib.get_tags(
@@ -116,7 +117,7 @@ class HeaderEditor(CTkFrame):
         self.text_editor.delete("1.0", "end")
 
     def back(self, saving):
-        if(saving):
+        if saving:
             text = self.text_editor.get("1.0", tkinter.END).rstrip("\n")
             project_lib.save_header(self.header, text)
 

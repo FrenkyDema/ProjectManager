@@ -107,7 +107,7 @@ class NewProjectPage(CTkFrame):
                                             text="Auto Readme",
                                             command=self.change_auto_readme)
         self.auto_readme_switch.grid(row=5, column=1, padx=40, pady=15)
-        self.auto_readme_switch.config(state=tkinter.DISABLED)
+        self.auto_readme_switch.configure(state=tkinter.DISABLED)
 
         self.lenguage_button = CTkButton(
             self,
@@ -172,6 +172,7 @@ class NewProjectPage(CTkFrame):
             PROJECT_SETTINGS_FILE, "percorso", directory)
 
     def change_page(self, page_type):
+
         match page_type:
             case new_project_enum.NewProjectPageEnum.DESCRIPRION:
                 self.app.change_right_frame(
