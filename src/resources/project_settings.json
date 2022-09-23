@@ -4,10 +4,9 @@
     "bin_folder": "bin",
     "doc_folder": "doc",
     "file_folder": "file",
-    "selected_language": "java",
+    "selected_language": "",
     "description": "",
     "auto_readme": false,
-    "project_name": "dsawdsawds",
-    "path": "",
-    "selected_languages": []
+    "project_name": "",
+    "path": "C:/Users/francesco/Desktop/test"
 }

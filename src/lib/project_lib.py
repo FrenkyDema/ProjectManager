@@ -103,26 +103,21 @@ def make_project_dir():
     return exist, per_bin, per_doc
 
 
-def create_project_file(per_bin, per_doc):
-    project_name = get_key_value_json(
-        "project_settings.json", "project_name")
-    nome_readme = get_key_value_json("project_settings.json", "nome_readme")
-    language = get_key_value_json(
-        "project_settings.json", "selected_language")
-    selected_languages: dict = get_key_value_json(
-        "config.json", "selected_languages")
-
+def create_project_file(bin_path, doc_path):
+    project_name = get_key_value_json("project_settings.json", "project_name")
+    readme_name = get_key_value_json("project_settings.json", "readme_name")
+    language = get_key_value_json("project_settings.json", "selected_language")
+    supported_languages: dict = get_key_value_json("config.json", "supported_languages")
     file_header = lenguage_to_header_file(language)
     if isfile(header_path + file_header):
-        file = open(per_bin + path_separation +
-                    project_name + "." + selected_languages[language], "w")
+        file = open(bin_path + path_separation + project_name + "." + supported_languages[language], "w")
         try:
             file.writelines(replace_all_tags(file_header))
-        except IOError as e:
-            print(e)
+        except IOError as io_error:
+            print(io_error)
         finally:
             file.close()
-    readme_file = open(per_doc + path_separation + nome_readme, "w")
+    readme_file = open(doc_path + path_separation + readme_name, "w")
     readme_file.writelines(replace_all_tags(lenguage_to_header_file("readme")))
     readme_file.close()
 
@@ -253,7 +248,7 @@ def default_config_values():
 # ========= recent_project.json =========
 
 def default_recent_project_values():
-    dix = {"recent_poject": [("", "", "")]}
+    dix = {"recent_project": [("", "", "")]}
 
     update_json('recent_project.json', dix)
 
