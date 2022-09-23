@@ -2,7 +2,7 @@ import sys
 import types
 from pathlib import Path
 
-import main_application
+from src.gui import main_application
 from src.lib import project_lib
 
 
