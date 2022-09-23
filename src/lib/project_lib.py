@@ -1,20 +1,21 @@
 # -*- coding: utf-8 -*-
-__autor__ = "Francesco"
+__author__ = "Francesco"
 __version__ = "0101 2022/03/14"
 
-from genericpath import isdir, isfile
-import os
 import json
+import os
 import re
+from genericpath import isfile
 
-percorso, tail = os.path.split(__file__)
-os.chdir(percorso)
+path, tail = os.path.split(__file__)
+os.chdir(path)
 
-# CONSTANTI
+# CONSTANT
 path_separation = "//"
 file_path = '../resources/'
 header_path = '../resources/Headers/'
 image_path = '../resources/Icons/'
+
 
 # ================== JSON functions ==================
 
@@ -56,11 +57,12 @@ def get_key_value_JSON(file_name, key):
         return ""
 
 
-def get_dix_JSON(file_name):
+def get_dix_JSON(file_name: str):
     f = open_JSON(file_name)
     data = json.load(f)
     f.close()
     return data
+
 
 # ================== create project functions ==================
 
@@ -70,61 +72,60 @@ def rotate(lista: list, n):
 
 
 def make_project_dir():
-    path: str = get_key_value_JSON("project_settings.json", "percorso")
-    nome_progetto: str = get_key_value_JSON(
-        "project_settings.json", "nome_progetto")
-    prefisso_cartella: str = get_key_value_JSON(
-        "project_settings.json", "prefisso_cartella")
-    cartella_bin: str = get_key_value_JSON(
-        "project_settings.json", "cartella_bin")
-    cartella_doc: str = get_key_value_JSON(
-        "project_settings.json", "cartella_doc")
-    cartella_file: str = get_key_value_JSON(
-        "project_settings.json", "cartella_file")
-    cartella: str = path + path_separation + prefisso_cartella + nome_progetto
-    esiste = os.path.isdir(cartella)
+    _path: str = get_key_value_JSON("project_settings.json", "path")
+    project_name: str = get_key_value_JSON(
+        "project_settings.json", "project_name")
+    folder_prefix: str = get_key_value_JSON(
+        "project_settings.json", "folder_prefix")
+    bin_folder: str = get_key_value_JSON(
+        "project_settings.json", "bin_folder")
+    doc_folder: str = get_key_value_JSON(
+        "project_settings.json", "doc_folder")
+    file_folder: str = get_key_value_JSON(
+        "project_settings.json", "file_folder")
+    folder: str = _path + path_separation + folder_prefix + project_name
+    exist = os.path.isdir(folder)
     per_bin = ""
     per_doc = ""
-    per_file = ""
 
-    if not esiste:
-        os.makedirs(cartella)
+    if not exist:
+        os.makedirs(folder)
 
-        per_bin = cartella + path_separation + cartella_bin
+        per_bin = folder + path_separation + bin_folder
         os.makedirs(per_bin)
 
-        per_doc = cartella + path_separation + cartella_doc
+        per_doc = folder + path_separation + doc_folder
         os.makedirs(per_doc)
 
-        per_file = cartella + path_separation + cartella_file
+        per_file = folder + path_separation + file_folder
         os.makedirs(per_file)
 
-    return esiste, per_bin, per_doc
+    return exist, per_bin, per_doc
 
 
 def create_project_file(per_bin, per_doc):
-    nome_progetto = get_key_value_JSON(
-        "project_settings.json", "nome_progetto")
+    project_name = get_key_value_JSON(
+        "project_settings.json", "project_name")
     nome_readme = get_key_value_JSON("project_settings.json", "nome_readme")
-    lenguage = get_key_value_JSON(
-        "project_settings.json", "linguaggio_selezionato")
-    supported_leguages: dict = get_key_value_JSON(
-        "config.json", "supported_leguages")
+    language = get_key_value_JSON(
+        "project_settings.json", "selected_language")
+    selected_languages: dict = get_key_value_JSON(
+        "config.json", "selected_languages")
 
-    
-    file_header = lenguage_to_header_file(lenguage)
+    file_header = lenguage_to_header_file(language)
     if isfile(header_path + file_header):
         file = open(per_bin + path_separation +
-                        nome_progetto + "." + supported_leguages[lenguage], "w")
+                    project_name + "." + selected_languages[language], "w")
         try:
             file.writelines(replace_all_tags(file_header))
         except IOError as e:
             print(e)
         finally:
             file.close()
-    file_redme = open(per_doc + path_separation + nome_readme, "w")
-    file_redme.writelines(replace_all_tags(lenguage_to_header_file("readme")))
-    file_redme.close()
+    readme_file = open(per_doc + path_separation + nome_readme, "w")
+    readme_file.writelines(replace_all_tags(lenguage_to_header_file("readme")))
+    readme_file.close()
+
 
 # ================== edit header functions ==================
 
@@ -169,6 +170,7 @@ def get_header_text(file_name):
 def lenguage_to_header_file(lenguage: str):
     return lenguage + "_header.txt"
 
+
 # ================== tags functions ==================
 
 
@@ -202,6 +204,7 @@ def get_tags(file_name):
         stringa += "{%" + tag + "%}" + "\n"
     return stringa
 
+
 # ================== recent projects functions ==================
 
 
@@ -210,44 +213,50 @@ def add_new_project(title, date, location):
     recent_preoject.append((title, date, location))
     update_key_JSON("recent_poject.json", "recent_poject", recent_preoject)
 
+
 # ========= project_settings.json =========
 
 def default_project_settings_values():
-    
     update_JSON("project_settings.json", get_key_value_JSON("config.json", "default_project_config"))
+
 
 # ========= config.json =========
 
 def default_config_values():
-    dix = {}
-
-    dix["supported_leguages"] = {"java": "java", "python": "py"}
-    dix["tags"] = ["prefisso_cartella",
-                   "nome_readme",
-                   "cartella_bin",
-                   "cartella_doc",
-                   "cartella_file",
-                   "descrizione",
-                   "nome_progetto",
-                   "auto_readme"]
-    dix["work_space_name"] = "src"
-    dix["default_project_config"] = {
-        "linguaggio_selezionato": "",
-        "nome_progetto": "",
-        "descrizione": "",
-        "auto_readme": False
+    dix = {
+        "supported_languages": {
+            "java": "java",
+            "python": "py"
+        },
+        "tags": [
+            "folder_prefix",
+            "readme_name",
+            "bin_folder",
+            "doc_folder",
+            "file_folder",
+            "description",
+            "project_name",
+            "auto_readme"
+        ],
+        "work_space_name": "src",
+        "default_project_config": {
+            "selected_language": "",
+            "project_name": "",
+            "description": "",
+            "auto_readme": False
+        }
     }
 
     update_JSON('config.json', dix)
 
+
 # ========= recent_project.json =========
 
 def default_recent_project_values():
-    dix = {}
-
-    dix["recent_poject"] = [("", "", "")]
+    dix = {"recent_poject": [("", "", "")]}
 
     update_JSON('recent_project.json', dix)
+
 
 # ========= image functions =========
 
