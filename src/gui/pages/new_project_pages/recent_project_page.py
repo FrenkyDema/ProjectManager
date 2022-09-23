@@ -1,14 +1,10 @@
 # -*- coding: utf-8 -*-
 __autor__ = "Francesco"
 __version__ = "0101 2022/06/05"
-import tkinter
+
 from customtkinter import *
-from tkinter import messagebox, scrolledtext
 
-
-from ....lib import project_lib
 from ....gui import main_page_enum
-
 
 CONFIG_FILE = "config.json"
 
@@ -33,7 +29,7 @@ class RecentProjectPage(CTkFrame):
 
         back_button = CTkButton(
             master=self,
-            text=f"Indietro",
+            text="Indietro",
             fg_color=("gray65", "gray25"),
             command=lambda: self.app.chose_frame(main_page_enum.MainPageEnum.NEW_PROJECT))
 
