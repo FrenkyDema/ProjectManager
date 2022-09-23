@@ -127,7 +127,7 @@ class App(CTk):
     def clear_frame_right(self):
         self.frame_right.destroy()
 
-    def on_closing(self, event=0):
+    def on_closing(self):
         self.destroy()
 
     def start(self):
