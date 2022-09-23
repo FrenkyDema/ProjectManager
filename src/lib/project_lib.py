@@ -20,20 +20,20 @@ image_path = '../resources/Icons/'
 # ================== JSON functions ==================
 
 
-def open_JSON(file_name):
+def open_json(file_name):
     try:
         f = open(file_path + file_name, 'r+')
         return f
     except FileNotFoundError:
         with open(file_path + file_name, 'w') as f:
             json.dump({}, f, indent=4)
-        return open_JSON(file_name)
+        return open_json(file_name)
     except:
         exit(1)
 
 
-def update_key_JSON(file_name, key, value):
-    f = open_JSON(file_name)
+def update_key_json(file_name, key, value):
+    f = open_json(file_name)
     data = json.load(f)
     data[key] = value
     f.seek(0)
@@ -42,13 +42,13 @@ def update_key_JSON(file_name, key, value):
     f.close()
 
 
-def update_JSON(file_name, dix):
+def update_json(file_name, dix):
     for key, value in dix.items():
-        update_key_JSON(file_name, key, value)
+        update_key_json(file_name, key, value)
 
 
-def get_key_value_JSON(file_name, key):
-    f = open_JSON(file_name)
+def get_key_value_json(file_name, key):
+    f = open_json(file_name)
     data = json.load(f)
     f.close()
     try:
@@ -57,8 +57,8 @@ def get_key_value_JSON(file_name, key):
         return ""
 
 
-def get_dix_JSON(file_name: str):
-    f = open_JSON(file_name)
+def get_dix_json(file_name: str):
+    f = open_json(file_name)
     data = json.load(f)
     f.close()
     return data
@@ -72,16 +72,16 @@ def rotate(lista: list, n):
 
 
 def make_project_dir():
-    _path: str = get_key_value_JSON("project_settings.json", "path")
-    project_name: str = get_key_value_JSON(
+    _path: str = get_key_value_json("project_settings.json", "path")
+    project_name: str = get_key_value_json(
         "project_settings.json", "project_name")
-    folder_prefix: str = get_key_value_JSON(
+    folder_prefix: str = get_key_value_json(
         "project_settings.json", "folder_prefix")
-    bin_folder: str = get_key_value_JSON(
+    bin_folder: str = get_key_value_json(
         "project_settings.json", "bin_folder")
-    doc_folder: str = get_key_value_JSON(
+    doc_folder: str = get_key_value_json(
         "project_settings.json", "doc_folder")
-    file_folder: str = get_key_value_JSON(
+    file_folder: str = get_key_value_json(
         "project_settings.json", "file_folder")
     folder: str = _path + path_separation + folder_prefix + project_name
     exist = os.path.isdir(folder)
@@ -104,12 +104,12 @@ def make_project_dir():
 
 
 def create_project_file(per_bin, per_doc):
-    project_name = get_key_value_JSON(
+    project_name = get_key_value_json(
         "project_settings.json", "project_name")
-    nome_readme = get_key_value_JSON("project_settings.json", "nome_readme")
-    language = get_key_value_JSON(
+    nome_readme = get_key_value_json("project_settings.json", "nome_readme")
+    language = get_key_value_json(
         "project_settings.json", "selected_language")
-    selected_languages: dict = get_key_value_JSON(
+    selected_languages: dict = get_key_value_json(
         "config.json", "selected_languages")
 
     file_header = lenguage_to_header_file(language)
@@ -186,10 +186,10 @@ def replace_all_tags(file_name):
     for line in list_lines:
         new_line = line
         for key in pattern.findall(line):
-            temp_return_str = get_key_value_JSON(
+            temp_return_str = get_key_value_json(
                 "project_settings.json", key.strip("{%%}"))
             if temp_return_str == "":
-                temp_return_str = get_key_value_JSON(
+                temp_return_str = get_key_value_json(
                     "config.json", key.strip("{%%}"))
             matchs[key] = temp_return_str
             new_line = new_line.replace(key, matchs[key])
@@ -198,7 +198,7 @@ def replace_all_tags(file_name):
 
 
 def get_tags(file_name):
-    tag_list: list = get_key_value_JSON(file_name, "tags")
+    tag_list: list = get_key_value_json(file_name, "tags")
     stringa: str = ""
     for tag in tag_list:
         stringa += "{%" + tag + "%}" + "\n"
@@ -209,15 +209,15 @@ def get_tags(file_name):
 
 
 def add_new_project(title, date, location):
-    recent_preoject: list = get_key_value_JSON("recent_poject.json", "recent_poject")
+    recent_preoject: list = get_key_value_json("recent_poject.json", "recent_poject")
     recent_preoject.append((title, date, location))
-    update_key_JSON("recent_poject.json", "recent_poject", recent_preoject)
+    update_key_json("recent_poject.json", "recent_poject", recent_preoject)
 
 
 # ========= project_settings.json =========
 
 def default_project_settings_values():
-    update_JSON("project_settings.json", get_key_value_JSON("config.json", "default_project_config"))
+    update_json("project_settings.json", get_key_value_json("config.json", "default_project_config"))
 
 
 # ========= config.json =========
@@ -247,7 +247,7 @@ def default_config_values():
         }
     }
 
-    update_JSON('config.json', dix)
+    update_json('config.json', dix)
 
 
 # ========= recent_project.json =========
@@ -255,7 +255,7 @@ def default_config_values():
 def default_recent_project_values():
     dix = {"recent_poject": [("", "", "")]}
 
-    update_JSON('recent_project.json', dix)
+    update_json('recent_project.json', dix)
 
 
 # ========= image functions =========

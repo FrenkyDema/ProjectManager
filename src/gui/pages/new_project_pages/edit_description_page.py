@@ -42,7 +42,7 @@ class EditDescriptionPage(CTkFrame):
         self.text_area = scrolledtext.ScrolledText(frame, wrap=tkinter.WORD,
                                                    font=("Roboto Medium", 10))
         self.text_area.insert(tkinter.INSERT,
-                              project_lib.get_key_value_JSON(PROJECT_SETTINGS_FILE, "description").rstrip("\n"))
+                              project_lib.get_key_value_json(PROJECT_SETTINGS_FILE, "description").rstrip("\n"))
 
         self.text_area.grid(column=0, row=0, columnspan=3, pady=10, padx=10, sticky="nsew")
 
@@ -67,7 +67,7 @@ class EditDescriptionPage(CTkFrame):
     def back(self):
         description = self.text_area.get("1.0", tkinter.END).rstrip("\n")
 
-        project_lib.update_key_JSON(
+        project_lib.update_key_json(
             PROJECT_SETTINGS_FILE, "description", description)
 
         self.app.chose_frame(main_page_enum.MainPageEnum.NEW_PROJECT)
