@@ -1,22 +1,51 @@
 # -*- coding: utf-8 -*-
-__autor__ = "Francesco"
+__author__ = "Francesco"
 __version__ = "0101 2022/03/19"
+
 import tkinter
-from customtkinter import *
-from tkinter import StringVar, filedialog, messagebox, scrolledtext
+from genericpath import isdir
+from tkinter import filedialog, messagebox
+
 from PIL import Image
 from PIL.ImageTk import PhotoImage
+from customtkinter import *
 
-from genericpath import isdir
-
-from ...lib import project_lib
-from ...gui import main_application
-from ..pages import new_project_enum
-from .new_project_pages import recent_project_page
 from .new_project_pages import edit_description_page
-
+from .new_project_pages import recent_project_page
+from ..pages import new_project_enum
+from ...lib import project_lib
 
 PROJECT_SETTINGS_FILE = "project_settings.json"
+
+
+def option_menu_callback(choice):
+    project_lib.update_key_JSON(
+        PROJECT_SETTINGS_FILE, "selected_language", choice)
+
+
+def change_project_title(entry_text: StringVar):
+    project_lib.update_key_JSON(
+        PROJECT_SETTINGS_FILE, "project_name", entry_text.get())
+
+
+def project_title_check(project_title):
+    if project_title == "" or len(project_title) < 3:
+        messagebox.showerror(
+            "Invalid Input", "Inserire un titolo valido o\ncaratteri minimi 3")
+        return True
+    if any((c in "/\\:,.") for c in project_title):
+        messagebox.showerror(
+            "Invalid Input", "Inserire un titolo valido \ncaratteri /\\:,. non consentiti")
+        return True
+    return False
+
+
+def project_directory_check():
+    if not isdir(project_lib.get_key_value_JSON(PROJECT_SETTINGS_FILE, "path")):
+        messagebox.showerror(
+            "Error", "Selezionare un percorso valido")
+        return True
+    return False
 
 
 class NewProjectPage(CTkFrame):
@@ -50,7 +79,7 @@ class NewProjectPage(CTkFrame):
             row=0, column=0, columnspan=3, padx=10, pady=10, sticky="en")
 
         self.entry_text = StringVar()
-        self.project_name_entry = self.init_CTkEntry()
+        self.project_name_entry = self.init_custom_entry()
         self.project_name_entry.grid(
             row=1, column=0, columnspan=3, padx=20, pady=15)
         self.add_entry_text_trace()
@@ -90,17 +119,17 @@ class NewProjectPage(CTkFrame):
             command=lambda: self.change_page(new_project_enum.NewProjectPageEnum.DESCRIPRION))
         self.description_button.grid(row=3, column=1, padx=40, pady=15)
 
-        supported_lenguage = project_lib.get_key_value_JSON(
+        supported_language = project_lib.get_key_value_JSON(
             "config.json", "supported_leguages").keys()
-        self.lenguage_optionmenu_var = StringVar(
+        self.language_option_menu_var = StringVar(
             value="Scegli linguaggio")  # set initial value
-        self.lenguage_combobox = CTkOptionMenu(
+        self.language_combobox = CTkOptionMenu(
             master=self,
-            values=list(supported_lenguage),
+            values=list(supported_language),
             fg_color=("gray65", "gray25"),
-            command=self.optionmenu_callback,
-            variable=self.lenguage_optionmenu_var)
-        self.lenguage_combobox.grid(row=4, column=1, padx=30, pady=15)
+            command=option_menu_callback,
+            variable=self.language_option_menu_var)
+        self.language_combobox.grid(row=4, column=1, padx=30, pady=15)
 
         self.auto_readme = False
         self.auto_readme_switch = CTkSwitch(master=self,
@@ -109,7 +138,7 @@ class NewProjectPage(CTkFrame):
         self.auto_readme_switch.grid(row=5, column=1, padx=40, pady=15)
         self.auto_readme_switch.configure(state=tkinter.DISABLED)
 
-        self.lenguage_button = CTkButton(
+        self.language_button = CTkButton(
             self,
             height=40,
             text="Crea Progetto",
@@ -118,15 +147,10 @@ class NewProjectPage(CTkFrame):
                 "submit_icon.png")).resize((30, 30))),
             fg_color=("gray65", "gray25"),  # <- custom tuple-color
             command=self.submit_all)
-        self.lenguage_button.grid(
+        self.language_button.grid(
             row=6, column=0, columnspan=3, padx=10, pady=10, sticky="se")
 
         self.set_default_values()
-
-    def optionmenu_callback(self, choice):
-
-        project_lib.update_key_JSON(
-            PROJECT_SETTINGS_FILE, "linguaggio_selezionato", choice)
 
     def set_default_values(self):
 
@@ -136,7 +160,7 @@ class NewProjectPage(CTkFrame):
             self.project_name_entry.insert(0, title)
         else:
             self.entry_text = StringVar()
-            self.project_name_entry = self.init_CTkEntry()
+            self.project_name_entry = self.init_custom_entry()
             self.project_name_entry.grid(
                 row=1, column=0, columnspan=3, padx=20, pady=20)
             self.add_entry_text_trace()
@@ -145,7 +169,7 @@ class NewProjectPage(CTkFrame):
             PROJECT_SETTINGS_FILE, "percorso")
         self.root_display.set_text(directory)
 
-    def init_CTkEntry(self):
+    def init_custom_entry(self):
         return CTkEntry(master=self,
                         width=500,
                         height=45,
@@ -153,23 +177,20 @@ class NewProjectPage(CTkFrame):
                         textvariable=self.entry_text)
 
     def add_entry_text_trace(self):
-        self.entry_text.trace("w", lambda name, index, mode,
-                              var=self.entry_text: self.change_projec_title(var))
+        self.entry_text.trace("w",
+                              lambda name, index, mode, var=self.entry_text: change_project_title(var)
+                              )
 
     def change_auto_readme(self):
         self.auto_readme = not self.auto_readme
         project_lib.update_key_JSON(
             PROJECT_SETTINGS_FILE, "auto_readme", self.auto_readme)
 
-    def change_projec_title(self, entry_text: StringVar):
-        project_lib.update_key_JSON(
-            PROJECT_SETTINGS_FILE, "nome_progetto", entry_text.get())
-
     def chose_directory(self):
         directory = filedialog.askdirectory()
         self.root_display.set_text(directory.replace("\\", "/"))
         project_lib.update_key_JSON(
-            PROJECT_SETTINGS_FILE, "percorso", directory)
+            PROJECT_SETTINGS_FILE, "path", directory)
 
     def change_page(self, page_type):
 
@@ -185,56 +206,38 @@ class NewProjectPage(CTkFrame):
             case _:
                 pass
 
-    def project_title_check(self, project_title):
-        if (project_title == "" or len(project_title) < 3):
-            messagebox.showerror(
-                "Invalid Input", "Inserire un titolo valido o\ncaratteri minimi 3")
-            return True
-        if any((c in "/\\:,.") for c in project_title):
-            messagebox.showerror(
-                "Invalid Input", "Inserire un titolo valido \ncaratteri /\\:,. non consentiti")
-            return True
-        return False
-
-    def lenguage_selected_check(self):
-        if project_lib.get_key_value_JSON(PROJECT_SETTINGS_FILE, "linguaggio_selezionato") == "":
+    def language_selected_check(self):
+        if project_lib.get_key_value_JSON(PROJECT_SETTINGS_FILE, "selected_language") == "":
             messagebox.showerror(
                 "Error", "Devi selezionare minimo 1 linguaggio")
-            self.lenguage_combobox.open_dropdown_menu()
-            return True
-        return False
-
-    def project_directory_check(self):
-        if not isdir(project_lib.get_key_value_JSON(PROJECT_SETTINGS_FILE, "percorso")):
-            messagebox.showerror(
-                "Error", "Selezionare un percorso valido")
+            self.language_combobox.open_dropdown_menu()
             return True
         return False
 
     def submit_all(self):
 
         project_title = self.project_name_entry.get()
-        if self.project_title_check(project_title) or \
-                self.lenguage_selected_check() or \
-                self.project_directory_check():
+        if project_title_check(project_title) or \
+                self.language_selected_check() or \
+                project_directory_check():
             return
         project_lib.update_key_JSON(
-            PROJECT_SETTINGS_FILE, "nome_progetto", project_title)
+            PROJECT_SETTINGS_FILE, "project_name", project_title)
 
-        if project_lib.get_key_value_JSON(PROJECT_SETTINGS_FILE, "descrizione") == "":
+        if project_lib.get_key_value_JSON(PROJECT_SETTINGS_FILE, "description") == "":
             empty_description = messagebox.askquestion("Empty description",
                                                        'La descrizione é vuota, vuoi aggiungerne una?', icon='warning')
             if empty_description == "yes":
                 self.change_page(new_project_enum.NewProjectPageEnum.DESCRIPRION)
                 return
 
-        exist, perBin, perDoc = project_lib.make_project_dir()
+        exist, per_bin, per_doc = project_lib.make_project_dir()
 
         if not exist:
             try:
                 project_lib.create_project_file(
-                    perBin,
-                    perDoc)
+                    per_bin,
+                    per_doc)
             except Exception:
                 return
 
@@ -245,9 +248,5 @@ class NewProjectPage(CTkFrame):
 
         project_lib.default_project_settings_values()
         self.set_default_values()
-
-
-
-
 
         messagebox.showinfo("Confirm", "Progetto creato con successo")
