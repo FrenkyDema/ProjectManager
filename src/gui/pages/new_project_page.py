@@ -116,7 +116,7 @@ class NewProjectPage(CTkFrame):
             image=PhotoImage(Image.open(project_lib.get_image_path(
                 "description_icon.png")).resize((30, 30))),
             fg_color=("gray65", "gray25"),  # <- custom tuple-color
-            command=lambda: self.change_page(new_project_enum.NewProjectPageEnum.DESCRIPRION))
+            command=lambda: self.change_page(new_project_enum.NewProjectPageEnum.DESCRIPTION))
         self.description_button.grid(row=3, column=1, padx=40, pady=15)
 
         supported_language = project_lib.get_key_value_JSON(
@@ -195,7 +195,7 @@ class NewProjectPage(CTkFrame):
     def change_page(self, page_type):
 
         match page_type:
-            case new_project_enum.NewProjectPageEnum.DESCRIPRION:
+            case new_project_enum.NewProjectPageEnum.DESCRIPTION:
                 self.app.change_right_frame(
                     edit_description_page.EditDescriptionPage(self.app, self.app))
 
@@ -228,7 +228,7 @@ class NewProjectPage(CTkFrame):
             empty_description = messagebox.askquestion("Empty description",
                                                        'La descrizione é vuota, vuoi aggiungerne una?', icon='warning')
             if empty_description == "yes":
-                self.change_page(new_project_enum.NewProjectPageEnum.DESCRIPRION)
+                self.change_page(new_project_enum.NewProjectPageEnum.DESCRIPTION)
                 return
 
         exist, per_bin, per_doc = project_lib.make_project_dir()
