@@ -1,16 +1,12 @@
 # -*- coding: utf-8 -*-
-__autor__ = "Francesco"
+__author__ = "Francesco"
 __version__ = "0101 2022/03/16"
-import tkinter
+
 from customtkinter import *
-from tkinter import messagebox, scrolledtext
 
-
-from ....lib import project_lib
-from ....gui import main_page_enum
-from ..settings_pages import edit_header_enum
 from .edit_header_pages import header_editor
-
+from ....gui import main_page_enum
+from ....lib import project_lib
 
 CONFIG_FILE = "config.json"
 
@@ -63,4 +59,4 @@ class EditHeadersPage(CTkFrame):
 
     def open_header_editor(self, header):
         self.app.change_right_frame(
-                    header_editor.HeaderEditor(self.app, self.app, header))
+            header_editor.HeaderEditor(self.app, self.app, header))

@@ -1,13 +1,13 @@
 {
-    "prefisso_cartella": "demartini_F_",
-    "nome_readme": "README.md",
-    "cartella_bin": "bin",
-    "cartella_doc": "doc",
-    "cartella_file": "file",
-    "linguaggio_selezionato": "java",
-    "descrizione": "",
+    "folder_prefix": "demartini_F_",
+    "readme_name": "README.md",
+    "bin_folder": "bin",
+    "doc_folder": "doc",
+    "file_folder": "file",
+    "selected_language": "java",
+    "description": "",
     "auto_readme": false,
-    "nome_progetto": "",
-    "percorso": "",
-    "linguaggi_selezionati": []
+    "project_name": "dsawdsawds",
+    "path": "",
+    "selected_languages": []
 }

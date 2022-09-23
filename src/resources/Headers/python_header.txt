@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
-__autor__ = "Francesco"
+__author__ = "Francesco"
 __version__ = "01.01 2019/09/18"
+
+path, tail = os.path.split(__file__)
+os.chdir(path)
 
 boold = False
 if __name__ == "__main__":

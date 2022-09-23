@@ -120,7 +120,7 @@ class NewProjectPage(CTkFrame):
         self.description_button.grid(row=3, column=1, padx=40, pady=15)
 
         supported_language = project_lib.get_key_value_json(
-            "config.json", "supported_leguages").keys()
+            "config.json", "supported_languages").keys()
         self.language_option_menu_var = StringVar(
             value="Scegli linguaggio")  # set initial value
         self.language_combobox = CTkOptionMenu(

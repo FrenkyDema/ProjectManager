@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
-__autor__ = "Francesco"
+__author__ = "Francesco"
 __version__ = "0101 2022/06/05"
+
 import tkinter
-from tkinter.tix import AUTO
+from tkinter import scrolledtext
 
 from customtkinter import *
-from tkinter import messagebox, scrolledtext
 
-from .....lib import project_lib
 from ... import settings_page_enum
-
+from .....lib import project_lib
 
 CONFIG_FILE = "config.json"
 PROJECT_SETTINGS_FILE = "project_settings.json"
@@ -59,10 +58,12 @@ class HeaderEditor(CTkFrame):
         tags_area = tkinter.Text(frame_left,
                                  width=25,
                                  font=("Roboto Medium", 10))
+
         tkinter.Scrollbar(tags_area, orient="vertical")
+
         tags_area.insert(tkinter.INSERT, project_lib.get_tags(
             CONFIG_FILE).rstrip("\n"))
-        tags_area.configure(state='disabled')
+        tags_area.config(state='disabled')
 
         tags_area.grid(row=1, column=0, pady=10,
                        padx=10, sticky="nsew")

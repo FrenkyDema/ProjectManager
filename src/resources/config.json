@@ -1,23 +1,23 @@
 {
-    "supported_leguages": {
-        "java": "java",
-        "python": "py"
-    },
-    "tags": [
-        "prefisso_cartella",
-        "nome_readme",
-        "cartella_bin",
-        "cartella_doc",
-        "cartella_file",
-        "descrizione",
-        "nome_progetto",
-        "auto_readme"
-    ],
-    "work_space_name": "src",
-    "default_project_config": {
-        "linguaggio_selezionato": "",
-        "nome_progetto": "",
-        "descrizione": "",
-        "auto_readme": false
-    }
+  "supported_languages": {
+    "java": "java",
+    "python": "py"
+  },
+  "tags": [
+    "folder_prefix",
+    "readme_name",
+    "bin_folder",
+    "doc_folder",
+    "file_folder",
+    "description",
+    "project_name",
+    "auto_readme"
+  ],
+  "work_space_name": "src",
+  "default_project_config": {
+    "selected_language": "",
+    "project_name": "",
+    "description": "",
+    "auto_readme": false
+  }
 }
