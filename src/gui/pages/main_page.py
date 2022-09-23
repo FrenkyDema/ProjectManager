@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-__autor__ = "Francesco"
+__author__ = "Francesco"
 __version__ = "0101 2022/03/19"
 
 import tkinter
