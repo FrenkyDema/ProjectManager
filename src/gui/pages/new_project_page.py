@@ -155,7 +155,7 @@ class NewProjectPage(CTkFrame):
     def set_default_values(self):
 
         title: str = project_lib.get_key_value_JSON(
-            PROJECT_SETTINGS_FILE, "nome_progetto")
+            PROJECT_SETTINGS_FILE, "project_name")
         if title != "":
             self.project_name_entry.insert(0, title)
         else:
@@ -166,7 +166,7 @@ class NewProjectPage(CTkFrame):
             self.add_entry_text_trace()
 
         directory = project_lib.get_key_value_JSON(
-            PROJECT_SETTINGS_FILE, "percorso")
+            PROJECT_SETTINGS_FILE, "path")
         self.root_display.set_text(directory)
 
     def init_custom_entry(self):
