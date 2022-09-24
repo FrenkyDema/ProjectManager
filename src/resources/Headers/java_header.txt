@@ -1,15 +1,15 @@
-package {%prefisso_cartella%}{%nome_progetto%}.{%cartella_bin%};
+package {%folder_prefix%}{%project_name%}.{%bin_folder%};
 
 import java.io.File;
 
-class {%nome_progetto%} {
+class {%project_name%} {
 
-        public {%nome_progetto%}() {
+        public {%project_name%}() {
 
         }
 }
 
-class {%nome_progetto%}Test {
+class {%project_name%}Test {
         public static void main(String[] args) {
 
                 System.out.println("Start");
@@ -17,7 +17,7 @@ class {%nome_progetto%}Test {
                 //              CALCOLO PATH RELATIVO UNIVERSALE
                 //----------------------------------------------------------------------
                 String tempPath = new File(
-                                String.valueOf({%nome_progetto%}.class.getPackage()).replace("package ", "").replace(".", "/")  
+                                String.valueOf({%project_name%}.class.getPackage()).replace("package ", "").replace(".", "/")  
                 ).getParent();
                 File uesrPath = new File(System.getProperty("user.dir"));
                 String projectPath = uesrPath.getName().equals(tempPath) ?
@@ -28,7 +28,7 @@ class {%nome_progetto%}Test {
                 //----------------------------------------------------------------------
 
                 // COSTANTI
-                String resursesPath = "/{%cartella_file%}/";
+                String resursesPath = "/{%file_folder%}/";
 
                 System.out.println("Hello, World");
 

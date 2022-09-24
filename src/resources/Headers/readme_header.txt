@@ -1,6 +1,6 @@
-# Program name: {%nome_progetto%}.java
+# Program name: {%project_name%}.java
 
 ---
 
 ## Consegna
-{%descrizione%}
+{%description%}
