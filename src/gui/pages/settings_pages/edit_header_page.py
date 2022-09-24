@@ -8,8 +8,6 @@ from .edit_header_pages import header_editor
 from ....gui import main_page_enum
 from ....lib import project_lib
 
-CONFIG_FILE = "config.json"
-
 
 class EditHeadersPage(CTkFrame):
     def __init__(self, master, app):
@@ -29,7 +27,7 @@ class EditHeadersPage(CTkFrame):
                               text_font=("Roboto Medium", 20))  # font name and size in px
         self.title.grid(row=0, column=1, pady=20)
 
-        headers = project_lib.header_avable()
+        headers = project_lib.header_available()
 
         self.open_editor_dix = {}
         buttons = []
@@ -57,6 +55,6 @@ class EditHeadersPage(CTkFrame):
         back_button.grid(row=7, column=0, columnspan=3,
                          padx=20, pady=20, sticky="es")
 
-    def open_header_editor(self, header):
+    def open_header_editor(self, header: str):
         self.app.change_right_frame(
             header_editor.HeaderEditor(self.app, self.app, header))

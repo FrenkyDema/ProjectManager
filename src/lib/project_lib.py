@@ -11,18 +11,20 @@ path, tail = os.path.split(__file__)
 os.chdir(path)
 
 # CONSTANT
-path_separation = "//"
+path_separation = "/"
 file_path = '../resources/'
 header_path = '../resources/Headers/'
 image_path = '../resources/Icons/'
 
+CONFIG_FILE = "config.json"
 PROJECT_SETTINGS_FILE = "project_settings.json"
+RECENT_PROJECT_FILE = "recent_project.json"
 
 
 # ================== JSON functions ==================
 
 
-def open_json(file_name):
+def open_json(file_name: str):
     try:
         f = open(file_path + file_name, 'r+')
         return f
@@ -34,7 +36,7 @@ def open_json(file_name):
         exit(1)
 
 
-def update_key_json(file_name, key, value):
+def update_key_json(file_name: str, key: str, value):
     f = open_json(file_name)
     data = json.load(f)
     data[key] = value
@@ -44,12 +46,12 @@ def update_key_json(file_name, key, value):
     f.close()
 
 
-def update_json(file_name, dix):
+def update_json(file_name: str, dix: dict):
     for key, value in dix.items():
         update_key_json(file_name, key, value)
 
 
-def get_key_value_json(file_name, key):
+def get_key_value_json(file_name: str, key: str):
     f = open_json(file_name)
     data = json.load(f)
     f.close()
@@ -69,22 +71,17 @@ def get_dix_json(file_name: str):
 # ================== create project functions ==================
 
 
-def rotate(lista: list, n):
+def rotate(lista: list, n: int):
     return lista[n:] + lista[:n]
 
 
 def make_project_dir():
-    _path: str = get_key_value_json("project_settings.json", "path")
-    project_name: str = get_key_value_json(
-        "project_settings.json", "project_name")
-    folder_prefix: str = get_key_value_json(
-        "project_settings.json", "folder_prefix")
-    bin_folder: str = get_key_value_json(
-        "project_settings.json", "bin_folder")
-    doc_folder: str = get_key_value_json(
-        "project_settings.json", "doc_folder")
-    file_folder: str = get_key_value_json(
-        "project_settings.json", "file_folder")
+    _path: str = get_key_value_json(PROJECT_SETTINGS_FILE, "path")
+    project_name: str = get_key_value_json(PROJECT_SETTINGS_FILE, "project_name")
+    folder_prefix: str = get_key_value_json(PROJECT_SETTINGS_FILE, "folder_prefix")
+    bin_folder: str = get_key_value_json(PROJECT_SETTINGS_FILE, "bin_folder")
+    doc_folder: str = get_key_value_json(PROJECT_SETTINGS_FILE, "doc_folder")
+    file_folder: str = get_key_value_json(PROJECT_SETTINGS_FILE, "file_folder")
     folder: str = _path + path_separation + folder_prefix + project_name
     exist = os.path.isdir(folder)
     per_bin = ""
@@ -105,12 +102,12 @@ def make_project_dir():
     return exist, per_bin, per_doc
 
 
-def create_project_file(bin_path, doc_path):
-    project_name = get_key_value_json("project_settings.json", "project_name")
-    readme_name = get_key_value_json("project_settings.json", "readme_name")
-    language = get_key_value_json("project_settings.json", "selected_language")
-    supported_languages: dict = get_key_value_json("config.json", "supported_languages")
-    file_header = lenguage_to_header_file(language)
+def create_project_file(bin_path: str, doc_path: str):
+    project_name = get_key_value_json(PROJECT_SETTINGS_FILE, "project_name")
+    readme_name = get_key_value_json(PROJECT_SETTINGS_FILE, "readme_name")
+    language = get_key_value_json(PROJECT_SETTINGS_FILE, "selected_language")
+    supported_languages: dict = get_key_value_json(CONFIG_FILE, "supported_languages")
+    file_header = language_to_header_file(language)
     if isfile(header_path + file_header):
         file = open(bin_path + path_separation + project_name + "." + supported_languages[language], "w")
         try:
@@ -120,14 +117,14 @@ def create_project_file(bin_path, doc_path):
         finally:
             file.close()
     readme_file = open(doc_path + path_separation + readme_name, "w")
-    readme_file.writelines(replace_all_tags(lenguage_to_header_file("readme")))
+    readme_file.writelines(replace_all_tags(language_to_header_file("readme")))
     readme_file.close()
 
 
 # ================== edit header functions ==================
 
 
-def read_header(file_name):
+def read_header(file_name: str):
     try:
         return open(header_path + file_name, 'r+')
     except FileNotFoundError:
@@ -137,11 +134,11 @@ def read_header(file_name):
         exit(1)
 
 
-def write_header(file_name):
+def write_header(file_name: str):
     return open(header_path + file_name, 'w')
 
 
-def save_header(file_name, text):
+def save_header(file_name: str, text: str):
     f = write_header(file_name)
 
     f.write(text)
@@ -149,11 +146,11 @@ def save_header(file_name, text):
     f.close()
 
 
-def header_avable():
+def header_available():
     return os.listdir(header_path)
 
 
-def get_header_text(file_name):
+def get_header_text(file_name: str):
     f = read_header(file_name)
     list_lines = f.readlines()
     f.close()
@@ -164,57 +161,55 @@ def get_header_text(file_name):
     return string
 
 
-def lenguage_to_header_file(lenguage: str):
-    return lenguage + "_header.txt"
+def language_to_header_file(language: str):
+    return language + "_header.txt"
 
 
 # ================== tags functions ==================
 
 
-def replace_all_tags(file_name):
+def replace_all_tags(file_name: str):
     f = read_header(file_name)
     list_lines = f.readlines()
     f.close()
 
     pattern = re.compile("{%.*?%}")
-    matchs = {}
+    matches = {}
     new_lines = []
 
     for line in list_lines:
         new_line = line
         for key in pattern.findall(line):
-            temp_return_str = get_key_value_json(
-                "project_settings.json", key.strip("{%%}"))
+            temp_return_str = get_key_value_json(PROJECT_SETTINGS_FILE, key.strip("{%%}"))
             if temp_return_str == "":
-                temp_return_str = get_key_value_json(
-                    "config.json", key.strip("{%%}"))
-            matchs[key] = temp_return_str
-            new_line = new_line.replace(key, matchs[key])
+                temp_return_str = get_key_value_json(CONFIG_FILE, key.strip("{%%}"))
+            matches[key] = temp_return_str
+            new_line = new_line.replace(key, matches[key])
         new_lines.append(new_line)
     return new_lines
 
 
-def get_tags(file_name):
+def get_tags(file_name: str):
     tag_list: list = get_key_value_json(file_name, "tags")
-    stringa: str = ""
+    string: str = ""
     for tag in tag_list:
-        stringa += "{%" + tag + "%}" + "\n"
-    return stringa
+        string += "{%" + tag + "%}" + "\n"
+    return string
 
 
 # ================== recent projects functions ==================
 
 
-def add_new_project(title, date, location):
-    recent_preoject: list = get_key_value_json("recent_poject.json", "recent_poject")
-    recent_preoject.append((title, date, location))
-    update_key_json("recent_poject.json", "recent_poject", recent_preoject)
+def add_new_project(title: str, date: str, location: str):
+    recent_project: list = get_key_value_json(RECENT_PROJECT_FILE, "recent_project")
+    recent_project.append((title, date, location))
+    update_key_json(RECENT_PROJECT_FILE, "recent_project", recent_project)
 
 
 # ========= project_settings.json =========
 
 def default_project_settings_values():
-    update_json("project_settings.json", get_key_value_json("config.json", "default_project_config"))
+    update_json(PROJECT_SETTINGS_FILE, get_key_value_json(CONFIG_FILE, "default_project_config"))
 
 
 # ========= config.json =========
@@ -244,24 +239,26 @@ def default_config_values():
         }
     }
 
-    update_json('config.json', dix)
+    update_json(CONFIG_FILE, dix)
 
 
 # ========= recent_project.json =========
 
 def default_recent_project_values():
-    dix = {"recent_project": [
-        {"project_name": "",
-         "location": "",
-         "time": ""}
-    ]}
+    dix = {
+        "recent_project": [
+            {"project_name": "",
+             "location": "",
+             "time": ""}
+        ]
+    }
 
-    update_json('recent_project.json', dix)
+    update_json(RECENT_PROJECT_FILE, dix)
 
 
 # ========= image functions =========
 
-def get_image_path(image_name):
+def get_image_path(image_name: str):
     return os.path.abspath(image_path + image_name)
 
 

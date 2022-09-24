@@ -15,7 +15,7 @@ from ...lib import project_lib
 from ...lib.project_lib import PROJECT_SETTINGS_FILE
 
 
-def option_menu_callback(choice):
+def option_menu_callback(choice: str):
     project_lib.update_key_json(
         PROJECT_SETTINGS_FILE, "selected_language", choice)
 
@@ -25,7 +25,7 @@ def change_project_title(entry_text: StringVar):
         PROJECT_SETTINGS_FILE, "project_name", entry_text.get())
 
 
-def project_title_check(project_title):
+def project_title_check(project_title: str):
     if project_title == "" or len(project_title) < 3:
         messagebox.showerror(
             "Invalid Input", "Inserire un titolo valido o\ncaratteri minimi 3")

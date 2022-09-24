@@ -6,8 +6,6 @@ from customtkinter import *
 
 from ....gui import main_page_enum
 
-CONFIG_FILE = "config.json"
-
 
 class RecentProjectPage(CTkFrame):
     def __init__(self, master, app):

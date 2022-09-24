@@ -8,8 +8,6 @@ from ....gui import main_page_enum
 from ....lib import project_lib
 from ....lib.project_lib import PROJECT_SETTINGS_FILE
 
-CONFIG_FILE = "config.json"
-
 
 def change_variable(variable: str, entry_text: StringVar):
     project_lib.update_key_json(

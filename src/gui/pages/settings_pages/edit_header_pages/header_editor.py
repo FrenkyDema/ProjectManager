@@ -8,15 +8,12 @@ from tkinter import scrolledtext
 from customtkinter import *
 
 from ... import settings_page_enum
-from .... import main_page_enum
 from .....lib import project_lib
-
-CONFIG_FILE = "config.json"
-PROJECT_SETTINGS_FILE = "project_settings.json"
+from .....lib.project_lib import CONFIG_FILE
 
 
 class HeaderEditor(CTkFrame):
-    def __init__(self, master, app, bound_header):
+    def __init__(self, master, app, bound_header: str):
         self.app = app
         super().__init__(master)
 
@@ -118,7 +115,7 @@ class HeaderEditor(CTkFrame):
     def clear_text(self):
         self.text_editor.delete("1.0", "end")
 
-    def back(self, saving):
+    def back(self, saving: bool):
         if saving:
             text = self.text_editor.get("1.0", tkinter.END).rstrip("\n")
             project_lib.save_header(self.header, text)

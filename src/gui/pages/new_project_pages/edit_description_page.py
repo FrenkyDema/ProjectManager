@@ -9,9 +9,7 @@ from customtkinter import *
 
 from ... import main_page_enum
 from ....lib import project_lib
-
-CONFIG_FILE = "config.json"
-PROJECT_SETTINGS_FILE = "project_settings.json"
+from ....lib.project_lib import PROJECT_SETTINGS_FILE
 
 
 class EditDescriptionPage(CTkFrame):
