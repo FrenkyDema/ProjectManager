@@ -35,3 +35,5 @@ Project tree created:
 
 - @FrenkyDema
 - @deMartiniFrancesco
+
+See [Contributor](https://github.com/FrenkyDema/ProjectManager/graphs/contributors)
