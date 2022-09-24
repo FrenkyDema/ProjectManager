@@ -248,7 +248,11 @@ def default_config_values():
 # ========= recent_project.json =========
 
 def default_recent_project_values():
-    dix = {"recent_project": [("", "", "")]}
+    dix = {"recent_project": [
+        {"project_name": "",
+         "location": "",
+         "time": ""}
+    ]}
 
     update_json('recent_project.json', dix)
 

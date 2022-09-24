@@ -4,7 +4,9 @@ from PIL import Image
 from PIL.ImageTk import PhotoImage
 from customtkinter import *
 
-from .pages import main_page, settings_page, new_project_page
+from .pages import main_page, settings_page, new_project_page, settings_page_enum, new_project_enum
+from .pages.new_project_pages import edit_description_page, recent_project_page
+from .pages.settings_pages import edit_header_page, edit_variables_page
 from ..gui import main_page_enum
 from ..lib import project_lib
 
@@ -114,6 +116,23 @@ class App(CTk):
 
             case main_page_enum.MainPageEnum.SETTINGS:
                 self.change_right_frame(settings_page.SettingsPage(self, self))
+
+            case new_project_enum.NewProjectPageEnum.DESCRIPTION:
+                self.change_right_frame(
+                    edit_description_page.EditDescriptionPage(self, self))
+
+            case new_project_enum.NewProjectPageEnum.RECENT:
+                self.change_right_frame(
+                    recent_project_page.RecentProjectPage(self, self))
+
+            case settings_page_enum.SettingsPageEnum.EDIT_HEADER:
+                self.change_right_frame(edit_header_page.EditHeadersPage(self, self))
+
+            case settings_page_enum.SettingsPageEnum.EDIT_VARIABLE:
+                self.change_right_frame(edit_variables_page.EditVariablePage(self, self))
+
+            case settings_page_enum.SettingsPageEnum.EDIT_FLAG:
+                pass
 
             case _:
                 self.change_right_frame(main_page.MainPage(self))

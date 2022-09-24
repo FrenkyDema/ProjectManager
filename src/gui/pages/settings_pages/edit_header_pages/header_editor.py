@@ -8,6 +8,7 @@ from tkinter import scrolledtext
 from customtkinter import *
 
 from ... import settings_page_enum
+from .... import main_page_enum
 from .....lib import project_lib
 
 CONFIG_FILE = "config.json"

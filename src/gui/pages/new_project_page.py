@@ -10,8 +10,6 @@ from PIL import Image
 from PIL.ImageTk import PhotoImage
 from customtkinter import *
 
-from .new_project_pages import edit_description_page
-from .new_project_pages import recent_project_page
 from ..pages import new_project_enum
 from ...lib import project_lib
 
@@ -74,7 +72,7 @@ class NewProjectPage(CTkFrame):
             corner_radius=10,
             image=PhotoImage(Image.open(project_lib.get_image_path("recent_icon.png")).resize((30, 30))),
             fg_color=("gray65", "gray25"),  # <- custom tuple-color
-            command=lambda: self.change_page(new_project_enum.NewProjectPageEnum.RECENT))
+            command=lambda: self.app.chose_frame(new_project_enum.NewProjectPageEnum.RECENT))
         self.recent_button.grid(row=0, column=0, columnspan=3, padx=10, pady=10, sticky="en")
 
         self.entry_text = StringVar()
@@ -111,7 +109,7 @@ class NewProjectPage(CTkFrame):
             compound="right",
             image=PhotoImage(Image.open(project_lib.get_image_path("description_icon.png")).resize((30, 30))),
             fg_color=("gray65", "gray25"),  # <- custom tuple-color
-            command=lambda: self.change_page(new_project_enum.NewProjectPageEnum.DESCRIPTION))
+            command=lambda: self.app.chose_frame(new_project_enum.NewProjectPageEnum.DESCRIPTION))
         self.description_button.grid(row=3, column=1, padx=40, pady=15)
 
         supported_language = project_lib.get_key_value_json("config.json", "supported_languages").keys()
@@ -184,20 +182,6 @@ class NewProjectPage(CTkFrame):
         project_lib.update_key_json(
             PROJECT_SETTINGS_FILE, "path", directory)
 
-    def change_page(self, page_type):
-
-        match page_type:
-            case new_project_enum.NewProjectPageEnum.DESCRIPTION:
-                self.app.change_right_frame(
-                    edit_description_page.EditDescriptionPage(self.app, self.app))
-
-            case new_project_enum.NewProjectPageEnum.RECENT:
-                self.app.change_right_frame(
-                    recent_project_page.RecentProjectPage(self.app, self.app))
-
-            case _:
-                pass
-
     def language_selected_check(self):
         if project_lib.get_key_value_json(PROJECT_SETTINGS_FILE, "selected_language") == "":
             messagebox.showerror(
@@ -219,7 +203,7 @@ class NewProjectPage(CTkFrame):
                 icon='warning'
             )
             if empty_description == "yes":
-                self.change_page(new_project_enum.NewProjectPageEnum.DESCRIPTION)
+                self.app.change_page(new_project_enum.NewProjectPageEnum.DESCRIPTION)
                 return
 
         exist, per_bin, per_doc = project_lib.make_project_dir()

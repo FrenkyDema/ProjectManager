@@ -6,7 +6,6 @@ import tkinter
 
 from customtkinter import *
 
-from .settings_pages import edit_header_page
 from ..pages import settings_page_enum
 
 
@@ -32,7 +31,7 @@ class SettingsPage(CTkFrame):
             master=self,
             text="Modifica intestazioni",
             fg_color=("gray65", "gray25"),
-            command=lambda: self.change_page(settings_page_enum.SettingsPageEnum.EDIT_HEADER))
+            command=lambda: self.app.chose_frame(settings_page_enum.SettingsPageEnum.EDIT_HEADER))
         button_1.grid(row=1, column=1,
                       padx=20, sticky="we")
 
@@ -40,7 +39,7 @@ class SettingsPage(CTkFrame):
             master=self,
             text="Modifica variabili",
             fg_color=("gray65", "gray25"),
-            command=lambda: self.change_page(settings_page_enum.SettingsPageEnum.EDIT_VARIABLE))
+            command=lambda: self.app.chose_frame(settings_page_enum.SettingsPageEnum.EDIT_VARIABLE))
         edit_variable_button.grid(row=2, column=1,
                                   padx=20, sticky="we")
         # edit_variable_button.configure(state=tkinter.DISABLED)
@@ -48,22 +47,7 @@ class SettingsPage(CTkFrame):
         edit_flag_button = CTkButton(
             master=self, text="Modifica flags",
             fg_color=("gray65", "gray25"),
-            command=lambda: self.change_page(settings_page_enum.SettingsPageEnum.EDIT_FLAG))
+            command=lambda: self.app.chose_frame(settings_page_enum.SettingsPageEnum.EDIT_FLAG))
         edit_flag_button.grid(row=3, column=1,
                               padx=20, sticky="we")
         edit_flag_button.configure(state=tkinter.DISABLED)
-
-    def change_page(self, page_type):
-        match page_type:
-            case settings_page_enum.SettingsPageEnum.EDIT_HEADER:
-                self.app.change_right_frame(
-                    edit_header_page.EditHeadersPage(self.app, self.app))
-
-            case settings_page_enum.SettingsPageEnum.EDIT_VARIABLE:
-                pass
-
-            case settings_page_enum.SettingsPageEnum.EDIT_FLAG:
-                pass
-
-            case _:
-                pass
