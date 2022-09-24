@@ -13,6 +13,8 @@ Project tree created:
         - file
 ```
 
+## Installation
+
 [Dowload](https://github.com/FrenkyDema/ProjectManager/releases/download/v1.0.2-alpha/ProjectManager.exe) the exe
 
 ## Screenshots
@@ -33,5 +35,7 @@ Project tree created:
 
 ## Author
 
-- [@FrenkyDema](https://github.com/FrenkyDema)
-- [@deMartiniFrancesco](https://github.com/deMartiniFrancesco)
+- @FrenkyDema
+- @deMartiniFrancesco
+
+See [Contributor](https://github.com/FrenkyDema/ProjectManager/graphs/contributors)
