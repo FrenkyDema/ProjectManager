@@ -33,5 +33,5 @@ Project tree created:
 
 ## Author
 
-- [@FrenkyDema](https://github.com/FrenkyDema)
-- [@deMartiniFrancesco](https://github.com/deMartiniFrancesco)
+- @FrenkyDema
+- @deMartiniFrancesco
