@@ -12,8 +12,7 @@ from customtkinter import *
 
 from ..pages import new_project_enum
 from ...lib import project_lib
-
-PROJECT_SETTINGS_FILE = "project_settings.json"
+from ...lib.project_lib import PROJECT_SETTINGS_FILE
 
 
 def option_menu_callback(choice):

@@ -16,6 +16,8 @@ file_path = '../resources/'
 header_path = '../resources/Headers/'
 image_path = '../resources/Icons/'
 
+PROJECT_SETTINGS_FILE = "project_settings.json"
+
 
 # ================== JSON functions ==================
 
