@@ -2,7 +2,7 @@
 __author__ = "Francesco"
 __version__ = "0101 2022/03/16"
 
-from customtkinter import *
+from customtkinter import CTkFrame, StringVar, CTkEntry, CTkButton, CTkLabel
 
 from ....gui import main_page_enum
 from ....lib import project_lib
