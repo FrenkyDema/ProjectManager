@@ -4,7 +4,7 @@ __version__ = "0101 2022/03/19"
 
 import tkinter
 
-from customtkinter import *
+from customtkinter import CTkLabel, CTkFrame
 
 
 class MainPage(CTkFrame):

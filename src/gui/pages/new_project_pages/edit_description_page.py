@@ -5,7 +5,7 @@ __version__ = "0101 2022/06/05"
 import tkinter
 from tkinter import scrolledtext
 
-from customtkinter import *
+from customtkinter import CTkFrame, CTkButton, CTkLabel
 
 from ... import main_page_enum
 from ....lib import project_lib

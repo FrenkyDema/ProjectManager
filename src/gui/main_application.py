@@ -1,8 +1,9 @@
+import sys
 import tkinter
 
 from PIL import Image
 from PIL.ImageTk import PhotoImage
-from customtkinter import *
+from customtkinter import set_appearance_mode, set_default_color_theme, CTkFrame, CTkSwitch, CTkButton, CTkLabel, CTk
 
 from .pages import main_page, settings_page, new_project_page, settings_page_enum, new_project_enum
 from .pages.new_project_pages import edit_description_page, recent_project_page

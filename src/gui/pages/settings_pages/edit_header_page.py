@@ -2,7 +2,7 @@
 __author__ = "Francesco"
 __version__ = "0101 2022/03/16"
 
-from customtkinter import *
+from customtkinter import CTkButton, CTkLabel, CTkFrame
 
 from .edit_header_pages import header_editor
 from ....gui import main_page_enum

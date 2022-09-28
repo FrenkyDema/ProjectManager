@@ -8,7 +8,7 @@ from tkinter import filedialog, messagebox
 
 from PIL import Image
 from PIL.ImageTk import PhotoImage
-from customtkinter import *
+from customtkinter import CTkEntry, CTkButton, CTkSwitch, CTkOptionMenu, CTkLabel, CTkFrame, StringVar
 
 from ..pages import new_project_enum
 from ...lib import project_lib
