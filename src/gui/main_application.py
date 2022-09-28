@@ -1,5 +1,6 @@
 import tkinter
 
+import customtkinter
 from PIL import Image
 from PIL.ImageTk import PhotoImage
 from customtkinter import *
@@ -11,9 +12,9 @@ from ..gui import main_page_enum
 from ..lib import project_lib
 
 # Modes: "System" (standard), "Dark", "Light"
-set_appearance_mode("Dark")
+customtkinter.set_appearance_mode("Dark")
 # Themes: "blue" (standard), "green", "dark-blue"
-set_default_color_theme("blue")
+customtkinter.set_default_color_theme("blue")
 
 
 class App(CTk):
