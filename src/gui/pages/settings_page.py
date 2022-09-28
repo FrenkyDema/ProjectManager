@@ -4,7 +4,7 @@ __version__ = "0101 2022/03/16"
 
 import tkinter
 
-from customtkinter import CTkButton, CTkLabel, CTkFrame
+from customtkinter import *
 
 from ..pages import settings_page_enum
 
