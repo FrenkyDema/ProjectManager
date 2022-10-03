@@ -1,9 +1,16 @@
+import os
 import sys
 import types
 from pathlib import Path
 
 from src.gui import main_application
 from src.lib import project_lib
+
+
+__MAIN__ = __file__
+
+path, tail = os.path.split(__file__)
+os.chdir(path)
 
 
 def import_parents(level):

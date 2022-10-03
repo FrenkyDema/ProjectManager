@@ -3,22 +3,29 @@ __author__ = "Francesco"
 __version__ = "0101 2022/03/14"
 
 import json
+import logging
 import os
 import re
+import sys
 from genericpath import isfile
 
-path, tail = os.path.split(__file__)
-os.chdir(path)
-
-# CONSTANT
-path_separation = "/"
-file_path = '../resources/'
-header_path = '../resources/Headers/'
-image_path = '../resources/Icons/'
+# CONSTANTS
+path_separation = "\\"
+file_path = 'src\\resources\\'
+header_path = 'src\\resources\\Headers\\'
+image_path = 'resources\\Icons\\'
 
 CONFIG_FILE = "config.json"
 PROJECT_SETTINGS_FILE = "project_settings.json"
 RECENT_PROJECT_FILE = "recent_project.json"
+
+
+# ================== File functions ==================
+def resource_path(relative_path: str):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.getcwd()))
+    print(os.path.join(base_path, relative_path))
+    return os.path.join(base_path, relative_path)
 
 
 # ================== JSON functions ==================
@@ -26,14 +33,15 @@ RECENT_PROJECT_FILE = "recent_project.json"
 
 def open_json(file_name: str):
     try:
-        f = open(file_path + file_name, 'r+')
+        f = open(resource_path(file_path + file_name), 'r+')
         return f
     except FileNotFoundError:
-        with open(file_path + file_name, 'w') as f:
+        with open(resource_path(file_path + file_name), 'w') as f:
             json.dump({}, f, indent=4)
         return open_json(file_name)
-    except:
-        exit(1)
+    except Exception as e:
+        # TODO collect error
+        logging.debug(e)
 
 
 def update_key_json(file_name: str, key: str, value):
@@ -109,14 +117,14 @@ def create_project_file(bin_path: str, doc_path: str):
     supported_languages: dict = get_key_value_json(CONFIG_FILE, "supported_languages")
     file_header = language_to_header_file(language)
     if isfile(header_path + file_header):
-        file = open(bin_path + path_separation + project_name + "." + supported_languages[language], "w")
+        file = open(resource_path(bin_path + path_separation + project_name + "." + supported_languages[language]), "w")
         try:
             file.writelines(replace_all_tags(file_header))
         except IOError as io_error:
             print(io_error)
         finally:
             file.close()
-    readme_file = open(doc_path + path_separation + readme_name, "w")
+    readme_file = open(resource_path(doc_path + path_separation + readme_name), "w")
     readme_file.writelines(replace_all_tags(language_to_header_file("readme")))
     readme_file.close()
 
@@ -126,16 +134,17 @@ def create_project_file(bin_path: str, doc_path: str):
 
 def read_header(file_name: str):
     try:
-        return open(header_path + file_name, 'r+')
+        return open(resource_path(header_path + file_name), 'r+')
     except FileNotFoundError:
-        open(header_path + file_name, 'w')
+        open(resource_path(header_path + file_name), 'w')
         return read_header(file_name)
-    except:
-        exit(1)
+    except Exception as e:
+        # TODO collect error
+        logging.debug(e)
 
 
 def write_header(file_name: str):
-    return open(header_path + file_name, 'w')
+    return open(resource_path(header_path + file_name), 'w')
 
 
 def save_header(file_name: str, text: str):
@@ -147,7 +156,7 @@ def save_header(file_name: str, text: str):
 
 
 def header_available():
-    return os.listdir(header_path)
+    return os.listdir(resource_path(header_path))
 
 
 def get_header_text(file_name: str):
