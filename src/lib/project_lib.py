@@ -13,7 +13,7 @@ from genericpath import isfile
 path_separation = "\\"
 file_path = 'src\\resources\\'
 header_path = 'src\\resources\\Headers\\'
-image_path = 'resources\\Icons\\'
+image_path = 'src\\resources\\Icons\\'
 
 CONFIG_FILE = "config.json"
 PROJECT_SETTINGS_FILE = "project_settings.json"
@@ -268,7 +268,7 @@ def default_recent_project_values():
 # ========= image functions =========
 
 def get_image_path(image_name: str):
-    return os.path.abspath(image_path + image_name)
+    return resource_path(image_path + image_name)
 
 
 boold = True
