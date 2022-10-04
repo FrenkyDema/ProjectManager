@@ -6,9 +6,6 @@ from pathlib import Path
 from src.gui import main_application
 from src.lib import project_lib
 
-
-__MAIN__ = __file__
-
 path, tail = os.path.split(__file__)
 os.chdir(path)
 
@@ -37,6 +34,12 @@ def print_import(string):
 import_parents(1)
 
 if __name__ == "__main__":
+    from genericpath import isdir
+
+    if not isdir(project_lib.resource_path("")):
+        print("not exist")
+        project_lib.create_app_files()
+
     project_lib.default_project_settings_values()
 
     app = main_application.App()

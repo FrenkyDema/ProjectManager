@@ -5,9 +5,13 @@ __version__ = "0101 2022/03/14"
 import json
 import logging
 import os
+import pathlib
 import re
+import shutil
 import sys
 from genericpath import isfile
+
+from appdirs import user_data_dir
 
 # CONSTANTS
 path_separation = "\\"
@@ -15,17 +19,45 @@ file_path = 'src\\resources\\'
 header_path = 'src\\resources\\Headers\\'
 image_path = 'src\\resources\\Icons\\'
 
+APP_NAME = "ProjectManager"
+
 CONFIG_FILE = "config.json"
 PROJECT_SETTINGS_FILE = "project_settings.json"
 RECENT_PROJECT_FILE = "recent_project.json"
 
 
-# ================== File functions ==================
-def resource_path(relative_path: str):
+# ================== Temp Files functions ==================
+def resource_temp_path(relative_path: str):
     """ Get absolute path to resource, works for dev and for PyInstaller """
-    base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.getcwd()))
-    print(os.path.join(base_path, relative_path))
+    temp_path = getattr(sys, '_MEIPASS', os.path.dirname(os.getcwd()))
+    # print("temp - ", os.path.join(temp_path, relative_path))
+    return os.path.join(temp_path, relative_path)
+
+
+# ================== File functions ==================
+
+def resource_path(relative_path: str):
+    base_path = user_data_dir(appname=APP_NAME, appauthor=False)
+    # print("Local - ", os.path.join(base_path, relative_path))
     return os.path.join(base_path, relative_path)
+
+
+def create_app_files():
+    copy_dir(resource_temp_path(file_path), resource_path(file_path), resource_temp_path(image_path))
+
+
+def copy_dir(src: str, dst: str, ignore: str = None):
+    source_path = pathlib.Path(src)
+    destination_path = pathlib.Path(dst)
+    destination_path.mkdir(parents=True, exist_ok=True)
+    for item in os.listdir(source_path):
+        s: pathlib.Path = source_path / item
+        d: pathlib.Path = destination_path / item
+        if s.is_dir():
+            if pathlib.Path(ignore) != s:
+                copy_dir(str(s), str(d), ignore)
+        else:
+            shutil.copy2(str(s), str(d))
 
 
 # ================== JSON functions ==================
@@ -268,7 +300,7 @@ def default_recent_project_values():
 # ========= image functions =========
 
 def get_image_path(image_name: str):
-    return resource_path(image_path + image_name)
+    return resource_temp_path(image_path + image_name)
 
 
 boold = True
