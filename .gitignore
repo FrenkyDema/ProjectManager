@@ -314,3 +314,12 @@ pip-selfcheck.json
 *.code-workspace
 
 # End of https://www.toptal.com/developers/gitignore/api/pycharm,venv,visualstudiocode,python
+doc/Schema.pdn
+.vscode/tasks.json
+.vscode/launch.json
+.idea/vcs.xml
+.idea/ProjectManager.iml
+.idea/modules.xml
+.idea/misc.xml
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/discord.xml
