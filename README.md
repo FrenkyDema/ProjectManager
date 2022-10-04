@@ -15,7 +15,7 @@ Project tree created:
 
 ## Installation
 
-[Dowload](https://github.com/FrenkyDema/ProjectManager/releases/download/v1.1.0-alpha/ProjectManager.exe) the exe
+- [Dowload](https://github.com/FrenkyDema/ProjectManager/releases/download/v1.1.1-alpha/ProjectManager.exe) v1.1.1-alpha
 
 ## Screenshots
 
@@ -35,7 +35,7 @@ Project tree created:
 
 ## Author
 
-- @FrenkyDema
-- @deMartiniFrancesco
+- [@FrenkyDema](https://github.com/FrenkyDema)
+- [@deMartiniFrancesco](https://github.com/deMartiniFrancesco)
 
 See [Contributor](https://github.com/FrenkyDema/ProjectManager/graphs/contributors)
