@@ -15,7 +15,7 @@ Project tree created:
 
 ## Installation
 
-[Dowload](https://github.com/FrenkyDema/ProjectManager/releases/download/v1.1.0-alpha/ProjectManager.exe) the exe
+[Dowload](https://github.com/FrenkyDema/ProjectManager/releases/download/v1.0.2-alpha/ProjectManager.exe) the exe
 
 ## Screenshots
 
