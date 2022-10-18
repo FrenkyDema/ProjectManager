@@ -1591,7 +1591,6 @@ rule EXE_in_LNK
         category = "INFO"
 
     strings:
-        $ = ".exe" ascii wide nocase
         $ = ".dll" ascii wide nocase
         $ = ".scr" ascii wide nocase
         $ = ".pif" ascii wide nocase
