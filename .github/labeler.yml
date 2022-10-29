@@ -1,0 +1,23 @@
+documentation:
+  - .github/README.md
+
+library:
+  - src/lib/*
+
+ui:
+  - src/gui/*
+
+pages:
+  - src/gui/pages/*
+
+settings:
+  - src/gui/pages/settings_pages/*
+
+new_project:
+  - src/gui/pages/new_project_pages/*
+
+workflows:
+  - .github/workflows/*
+
+resources:
+  - src/resources
