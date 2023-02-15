@@ -69,18 +69,22 @@ class NewProjectPage(CTkFrame):
             width=50,
             height=50,
             corner_radius=10,
-            image=PhotoImage(Image.open(project_lib.get_image_path("recent_icon.png")).resize((30, 30))),
+            image=PhotoImage(Image.open(project_lib.get_image_path(
+                "recent_icon.png")).resize((30, 30))),
             fg_color=("gray65", "gray25"),  # <- custom tuple-color
             command=lambda: self.app.chose_frame(new_project_enum.NewProjectPageEnum.RECENT))
-        self.recent_button.grid(row=0, column=0, columnspan=3, padx=10, pady=10, sticky="en")
+        self.recent_button.grid(
+            row=0, column=0, columnspan=3, padx=10, pady=10, sticky="en")
 
         self.entry_text = StringVar()
         self.project_name_entry = self.init_custom_entry()
-        self.project_name_entry.grid(row=1, column=0, columnspan=3, padx=20, pady=15)
+        self.project_name_entry.grid(
+            row=1, column=0, columnspan=3, padx=20, pady=15)
         self.add_entry_text_trace()
 
         self.directory_frame = CTkFrame(master=self)
-        self.directory_frame.grid(row=2, column=0, columnspan=3, pady=10, padx=15)
+        self.directory_frame.grid(
+            row=2, column=0, columnspan=3, pady=10, padx=15)
 
         self.directory_frame.columnconfigure(0, weight=1)
         self.directory_frame.columnconfigure(1, weight=1)
@@ -90,13 +94,15 @@ class NewProjectPage(CTkFrame):
             self.directory_frame,
             width=400,
             height=45)
-        self.root_display.grid(row=0, column=0, columnspan=2, padx=10, sticky="e")
+        self.root_display.grid(
+            row=0, column=0, columnspan=2, padx=10, sticky="e")
 
         self.chose_directory_button = CTkButton(
             self.directory_frame,
             height=45,
             width=45,
-            image=PhotoImage(Image.open(project_lib.get_image_path("add-folder_ico.png")).resize((30, 30))),
+            image=PhotoImage(Image.open(project_lib.get_image_path(
+                "add-folder_ico.png")).resize((30, 30))),
             text="",
             fg_color=("gray65", "gray25"),  # <- custom tuple-color
             command=self.chose_directory)
@@ -106,12 +112,14 @@ class NewProjectPage(CTkFrame):
             self,
             text="Descrizione",
             compound="right",
-            image=PhotoImage(Image.open(project_lib.get_image_path("description_icon.png")).resize((30, 30))),
+            image=PhotoImage(Image.open(project_lib.get_image_path(
+                "description_icon.png")).resize((30, 30))),
             fg_color=("gray65", "gray25"),  # <- custom tuple-color
             command=lambda: self.app.chose_frame(new_project_enum.NewProjectPageEnum.DESCRIPTION))
         self.description_button.grid(row=3, column=1, padx=40, pady=15)
 
-        supported_language = project_lib.get_key_value_json("config.json", "supported_languages").keys()
+        supported_language = project_lib.get_key_value_json(
+            "config.json", "supported_languages").keys()
         self.language_option_menu_var = StringVar(value="Scegli linguaggio")
         self.language_combobox = CTkOptionMenu(
             master=self,
@@ -136,22 +144,26 @@ class NewProjectPage(CTkFrame):
             height=40,
             text="Crea Progetto",
             compound="right",
-            image=PhotoImage(Image.open(project_lib.get_image_path("submit_icon.png")).resize((30, 30))),
+            image=PhotoImage(Image.open(project_lib.get_image_path(
+                "submit_icon.png")).resize((30, 30))),
             fg_color=("gray65", "gray25"),  # <- custom tuple-color
             command=self.submit_all)
-        self.submit_button.grid(row=6, column=0, columnspan=3, padx=10, pady=10, sticky="se")
+        self.submit_button.grid(
+            row=6, column=0, columnspan=3, padx=10, pady=10, sticky="se")
 
         self.set_default_values()
 
     def set_default_values(self):
 
-        title: str = project_lib.get_key_value_json(PROJECT_SETTINGS_FILE, "project_name")
+        title: str = project_lib.get_key_value_json(
+            PROJECT_SETTINGS_FILE, "project_name")
         if title != "":
             self.project_name_entry.insert(0, title)
         else:
             self.entry_text = StringVar()
             self.project_name_entry = self.init_custom_entry()
-            self.project_name_entry.grid(row=1, column=0, columnspan=3, padx=20, pady=20)
+            self.project_name_entry.grid(
+                row=1, column=0, columnspan=3, padx=20, pady=20)
             self.add_entry_text_trace()
 
         directory = project_lib.get_key_value_json(
@@ -168,7 +180,8 @@ class NewProjectPage(CTkFrame):
         )
 
     def add_entry_text_trace(self):
-        self.entry_text.trace("w", lambda name, index, mode, var=self.entry_text: change_project_title(var))
+        self.entry_text.trace("w", lambda name, index, mode,
+                              var=self.entry_text: change_project_title(var))
 
     def change_auto_readme(self):
         self.auto_readme = not self.auto_readme
@@ -193,7 +206,8 @@ class NewProjectPage(CTkFrame):
         project_title = self.project_name_entry.get()
         if project_title_check(project_title) or self.language_selected_check() or project_directory_check():
             return
-        project_lib.update_key_json(PROJECT_SETTINGS_FILE, "project_name", project_title)
+        project_lib.update_key_json(
+            PROJECT_SETTINGS_FILE, "project_name", project_title)
 
         if project_lib.get_key_value_json(PROJECT_SETTINGS_FILE, "description") == "":
             empty_description = messagebox.askquestion(
@@ -202,7 +216,8 @@ class NewProjectPage(CTkFrame):
                 icon='warning'
             )
             if empty_description == "yes":
-                self.app.change_page(new_project_enum.NewProjectPageEnum.DESCRIPTION)
+                self.app.change_page(
+                    new_project_enum.NewProjectPageEnum.DESCRIPTION)
                 return
 
         exist, per_bin, per_doc = project_lib.make_project_dir()
@@ -211,7 +226,8 @@ class NewProjectPage(CTkFrame):
             try:
                 project_lib.create_project_file(per_bin, per_doc)
             except Exception as e:
-                messagebox.showerror("Error", f"Errore, riprova.\nError-code: '{e}'")
+                messagebox.showerror(
+                    "Error", f"Errore, riprova.\nError-code: '{e}'")
                 return
 
         else:

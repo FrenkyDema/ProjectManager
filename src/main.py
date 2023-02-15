@@ -3,8 +3,6 @@ import sys
 import types
 from pathlib import Path
 
-from src.gui import main_application
-from src.lib import project_lib
 
 path, tail = os.path.split(__file__)
 os.chdir(path)
@@ -32,6 +30,9 @@ def print_import(string):
 
 
 import_parents(1)
+
+from src.gui import main_application
+from src.lib import project_lib
 
 if __name__ == "__main__":
     from genericpath import isdir
