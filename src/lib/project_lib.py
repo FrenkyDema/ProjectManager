@@ -46,7 +46,7 @@ def create_app_files():
     copy_dir(resource_temp_path(file_path), resource_path(file_path), resource_temp_path(image_path))
 
 
-def copy_dir(src: str, dst: str, ignore: str = None):
+def copy_dir(src: str, dst: str, ignore: str = ""):
     source_path = pathlib.Path(src)
     destination_path = pathlib.Path(dst)
     destination_path.mkdir(parents=True, exist_ok=True)

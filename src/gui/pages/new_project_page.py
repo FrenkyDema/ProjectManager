@@ -168,7 +168,7 @@ class NewProjectPage(CTkFrame):
 
         directory = project_lib.get_key_value_json(
             PROJECT_SETTINGS_FILE, "path")
-        self.root_display.set_text(directory)
+        self.root_display.configure(text=directory)
 
     def init_custom_entry(self):
         return CTkEntry(
