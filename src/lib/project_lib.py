@@ -11,6 +11,7 @@ import shutil
 import sys
 from genericpath import isfile
 
+import requests
 from appdirs import user_data_dir
 
 # CONSTANTS
@@ -308,9 +309,8 @@ if __name__ == "__main__":
     if boold:
         print("Start")
 
-    default_project_settings_values()
-    default_config_values()
-    default_recent_project_values()
+    response = requests.get("https://api.github.com/repos/FrenkyDema/ProjectManager/releases/latest")
+    print(response.json()["tag_name"])
 
     if boold:
         print("End")
